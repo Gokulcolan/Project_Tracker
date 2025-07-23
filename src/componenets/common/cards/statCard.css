@@ -1,0 +1,95 @@
+/* Layout for cards */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    padding: 24px;
+    background-color: #e2e8ee;
+}
+
+/* Individual card */
+.card {
+    background: linear-gradient(145deg, #ffffff, #eaeef2);
+    border-radius: 16px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+}
+
+/* Header with icon and title */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #00796b;
+    color: #ffffff;
+    border-bottom: 2px solid #005b4f;
+}
+
+.card-icon {
+    font-size: 28px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    padding: 8px;
+    margin-left: 12px;
+}
+
+/* Title Text */
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    color: #ffffff;
+}
+
+/* Card details section */
+.card-details {
+    padding: 18px 20px;
+    font-size: 15px;
+    color: #333;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    border-bottom: 1px dashed #d3d3d3;
+    padding-bottom: 6px;
+}
+
+.detail-key {
+    font-weight: 500;
+    font-size: 15px;
+    color: #555;
+    text-transform: capitalize;
+}
+
+.detail-value {
+    font-size: 15px;
+    color: #1976d2;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .card-container {
+        grid-template-columns: 1fr;
+        padding: 16px;
+    }
+
+    .card-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .card-icon {
+        margin: 0;
+    }
+}
