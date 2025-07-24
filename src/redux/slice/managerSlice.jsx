@@ -19,6 +19,14 @@ const managerSlice = createSlice({
         updateMilestonesByProjectForManagerIsLoading: false,
         getMilestonesChartByProjectForManagerDetail: [],
         getMilestonesChartByProjectForManagerIsLoading: false,
+        getTaskListByProjectForManagerDetail: [],
+        getTaskListByProjectForManagerIsLoading: false,
+        getManagerTeamMemberListDetail: [],
+        getManagerTeamMemberListIsLoading: false,
+        getManagerTeamMemberProjectListDetail: [],
+        getManagerTeamMemberProjectListIsLoading: false,
+        managerAddUserDetail: [],
+        managerAddUserIsLoading: false
     },
     reducers: {
         managerAddProjectReducer: (state, { payload }) => {
@@ -26,7 +34,7 @@ const managerSlice = createSlice({
             state.managerAddProjectDetail = apiData;
             state.managerAddProjectIsLoading = isLoading;
         },
-        
+
         resetManagerAddProjectDetail: (state) => {
             state.managerAddProjectDetail = null;
             state.managerAddProjectIsLoading = false;
@@ -67,10 +75,46 @@ const managerSlice = createSlice({
             state.getMilestonesChartByProjectForManagerDetail = apiData;
             state.getMilestonesChartByProjectForManagerIsLoading = isLoading;
         },
+
+        getTaskListByProjectForManagerReducer: (state, { payload }) => {
+            const { apiData, isLoading } = payload;
+            state.getTaskListByProjectForManagerDetail = apiData;
+            state.getTaskListByProjectForManagerIsLoading = isLoading;
+        },
+        getManagerTeamMemberListReducer: (state, { payload }) => {
+            const { apiData, isLoading } = payload;
+            state.getManagerTeamMemberListDetail = apiData;
+            state.getManagerTeamMemberListIsLoading = isLoading;
+        },
+        getManagerTeamMemberProjectListReducer: (state, { payload }) => {
+            const { apiData, isLoading } = payload;
+            state.getManagerTeamMemberProjectListDetail = apiData;
+            state.getManagerTeamMemberProjectListIsLoading = isLoading;
+        },
+        managerAddUserReducer: (state, { payload }) => {
+            const { apiData, isLoading } = payload;
+            state.managerAddUserDetail = apiData;
+            state.managerAddUserIsLoading = isLoading;
+        },
     },
 })
 
-export const {resetManagerAddProjectDetail, managerAddProjectReducer, getManagerTeamMemberReducer, managerProjectListReducer, managerViewSingleProjectReducer, getMilestonesByProjectForManagerReducer, managerAddMilestoneReducer, updateMilestonesByProjectForManagerReducer, getMilestonesChartByProjectForManagerReducer } = managerSlice.actions;
+export const {
+    resetManagerAddProjectDetail,
+    managerAddProjectReducer,
+    getManagerTeamMemberReducer,
+    managerProjectListReducer,
+    managerViewSingleProjectReducer,
+    getMilestonesByProjectForManagerReducer,
+    managerAddMilestoneReducer,
+    updateMilestonesByProjectForManagerReducer,
+    getMilestonesChartByProjectForManagerReducer,
+    getTaskListByProjectForManagerReducer,
+    getManagerTeamMemberListReducer,
+    managerAddUserReducer,
+    getManagerTeamMemberProjectListReducer
+
+} = managerSlice.actions;
 
 export const managerSelector = (state) => state.manager;
 

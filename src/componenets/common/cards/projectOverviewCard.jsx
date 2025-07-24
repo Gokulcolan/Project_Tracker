@@ -18,7 +18,7 @@ import { userSelector } from "../../../redux/slice/userSlice";
 import DonutChart from "../chart/DonutChart";
 
 const ProjectOverviewCard = ({ project }) => {
-  console.log(project, "project")
+
   const { getMilestonesChartByProjectForUserDetail } = useSelector(userSelector);
 
   return (
@@ -40,7 +40,7 @@ const ProjectOverviewCard = ({ project }) => {
                 Project Overview
               </Typography>
             }
-            sx={{ textAlign: { xs: "center", sm: "left", backgroundColor: "#00796b", color: "white",padding:"13px 16px" } }}
+            sx={{ textAlign: { xs: "center", sm: "left", backgroundColor: "#00796b", color: "white", padding: "13px 16px" } }}
           />
 
           {/* <br /> */}

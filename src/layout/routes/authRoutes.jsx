@@ -16,9 +16,9 @@ const AuthRoutes = [
             //   path: "forgot-password", // Corrected path
             //   element: <ForgotPassword />,
             // },
-                {
-              path: "eidtProfile", // Corrected path
-              element: <EditProfile />,
+            {
+                path: "editProfile", // Corrected path
+                element: <EditProfile />,
             },
         ],
     }

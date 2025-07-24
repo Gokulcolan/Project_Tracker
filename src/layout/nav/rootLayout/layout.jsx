@@ -181,7 +181,7 @@ export const Layout = ({ open }) => {
                 <img
                     src={logo}
                     className="logo"
-                    style={{ width: "100%",height:"40px", padding: "12px 0px", backgroundColor: "#f8f9fa", boxShadow: " 0px 4px 8px rgba(0, 0, 0, 0.1) " }}
+                    style={{ width: "100%", height: "40px", padding: "12px 0px", backgroundColor: "#f8f9fa", boxShadow: " 0px 4px 8px rgba(0, 0, 0, 0.1) " }}
                     alt="Company Logo"
                 />
                 <List>
@@ -190,13 +190,12 @@ export const Layout = ({ open }) => {
                     ))}
                 </List>
                 {/* Copyright Message at the Bottom */}
-                <Box sx={{ position: "absolute", bottom: 0, width: "100%", padding: "10px 0px", color: "orange", textAlign: "center", fontSize: "10px", }}>
-                    <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+                <Box sx={{ position: "absolute", bottom: 0, width: "100%", padding: "10px 0px", color: "black", backgroundColor: "#f7ed91", textAlign: "center", fontSize: "12px", }}>
+                    <Typography variant="body3" sx={{ fontWeight: "bold" }}>
                         &copy; {new Date().getFullYear()} PED-AI Team. All Rights Reserved.
                     </Typography>
                 </Box>
             </Drawer>
-
         </Box>
     );
 }

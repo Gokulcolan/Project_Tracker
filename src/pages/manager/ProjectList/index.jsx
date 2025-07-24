@@ -48,6 +48,7 @@ const ProjectList = () => {
         ...item,
         "teammembers.name": item.teammembers?.map(member => member.name).join(", "),
     }));
+    
 
     return (
         <div>

@@ -7,14 +7,16 @@ import { useDispatch, useSelector } from "react-redux";
 import ProjectOverviewCard from "../../common/cards/projectOverviewCard"
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getMilestonesByProjectForUserApi, MilestonesChartByProjectForUserApi, userViewSingleProjectApi } from "../../../redux/action/userAction";
-import { userSelector } from "../../../redux/slice/userSlice";
+
 import CommonTable from "../../common/Table/commonTable";
-import { userViewMilestoneProjectTableHead } from "../../../utils/constants/userTableData";
-import UserAddMilestoneModal from "../../common/modal/userAddMileStoneModal";
-import UserUpdateMilestoneModal from "../../common/modal/userUpdateMilestoneModal";
-import AddNewTask from '../AddNewTask';
-import { Button } from '@mui/material';
+import { getMilestoneByProjectForManagerApi, managerViewSingleProjectApi } from '../../../redux/action/managerAction';
+import { MilestonesChartByProjectForUserApi } from '../../../redux/action/userAction';
+import ManagerViewMilestoneModal from '../../common/modal/managerViewMilestoneModal';
+import ManagerAddMilestoneModal from '../../common/modal/managerAddMilestoneModal';
+import { managerSelector } from '../../../redux/slice/managerSlice';
+import { managerViewMilestoneProjectTableHead } from '../../../utils/constants/userTableData';
+import ProjectTaskList from '../ProjectTaskList';
+
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -73,52 +75,48 @@ const tabStyles = {
 
 export default function ProjectDashboard() {
 
-
     const { state } = useLocation();
     const dispatch = useDispatch()
-    const [value, setValue] = React.useState(0);
     const [open, setOpen] = useState(false);
     const [openUpdate, setOpenUpdate] = useState(false);
+    const [value, setValue] = React.useState(0);
+
 
     const [selectedMilestone, setSelectedMilestone] = useState(null);
     const projectRefId = state?.projectRefId;
-    const { userViewSingleProjectDetail, getMilestonesByProjectForUserDetail } = useSelector(userSelector);
+    const { managerViewSingleProjectDetail, getMilestonesByProjectForManagerDetail } = useSelector(managerSelector);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
     useEffect(() => {
         if (projectRefId) {
-            dispatch(userViewSingleProjectApi(projectRefId));
-            dispatch(getMilestonesByProjectForUserApi(projectRefId));
+            dispatch(managerViewSingleProjectApi(projectRefId));
+            dispatch(getMilestoneByProjectForManagerApi(projectRefId));
             dispatch(MilestonesChartByProjectForUserApi(projectRefId))
         }
     }, [dispatch, projectRefId]);
 
-    // const handleAddMilestone = () => {
-    //     setSelectedMilestone({
-    //         projectRefId: projectRefId,
-    //         // milestoneRefId: row.milestone_ref_id,
-    //     });
-    //     setOpen(true);
-    // }
+    const handleAddMilestone = () => {
+        setSelectedMilestone({
+            projectRefId: projectRefId,
+            // milestoneRefId: row.milestone_ref_id,
+        });
+        setOpen(true);
+    }
 
     const handleActionClick = (action, row) => {
+        console.log(row, "row")
         switch (action) {
 
+            // case "view":
+            //     navigate("/userDashboard/addMilestones", {
+            //         state: { projectRefId: row.project_ref_id },
+            //     });
+            //     break;
+
             case "view":
-                // if (row.status === null) {
-                setSelectedMilestone({
-                    projectRefId: projectRefId,
-                    milestoneRefId: row.milestone_ref_id,
-                    milestoneData: row,
-                });
-                setOpen(true);
-                // } else {
-                //     alert("Set Milestone is Already Completed now you are not able to view.");
-                // }
-                break;
-            case "edit":
                 setSelectedMilestone({
                     projectRefId: projectRefId,
                     milestoneRefId: row.milestone_ref_id,
@@ -126,16 +124,19 @@ export default function ProjectDashboard() {
                 });
                 setOpenUpdate(true);
                 break;
+
             // case "delete":
             //     if (window.confirm(`Are you sure you want to delete "${row.project_name}"?`)) {
             //         console.log("DELETE", row);
             //         // dispatch(deleteProjectApi(row.id))
             //     }
             //     break;
+
             default:
                 break;
         }
     };
+
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -148,53 +149,65 @@ export default function ProjectDashboard() {
             </Box>
             <CustomTabPanel value={value} index={0}>
                 <div style={{ padding: "16px 0" }}>
-                    <Box >
-                        <ProjectOverviewCard
-                            project={{
-                                projectId: userViewSingleProjectDetail?.data?.project_id,
-                                progress: 40, // Calculate if needed
-                                customerName: userViewSingleProjectDetail?.data?.project_sponsor,
-                                customerLink: "",
-                                billingType: userViewSingleProjectDetail?.data?.category,
-                                totalRate: userViewSingleProjectDetail?.data?.business_unit,
-                                status: "In Progress",
-                                dateCreated: userViewSingleProjectDetail?.data?.created_at?.split("T")[0],
-                                startDate: userViewSingleProjectDetail?.data?.start_date,
-                                deadline: userViewSingleProjectDetail?.data?.enddate,
-                                estimatedHours: "90:00",
-                                loggedHours: userViewSingleProjectDetail?.data?.plant,
-                                description: userViewSingleProjectDetail?.data?.project_description,
-                                projectManager: userViewSingleProjectDetail?.data?.project_manager,
-                                projectName: userViewSingleProjectDetail?.data?.project_name,
-                                projectSponsor: userViewSingleProjectDetail?.data?.project_sponsor,
-                                teamMember: userViewSingleProjectDetail?.data?.teammember,
-                                product: userViewSingleProjectDetail?.data?.product,
-                            }}
-                        />
-                    </Box>
+                    {managerViewSingleProjectDetail?.data?.category === "Others" ?
+                        <>
+                            <Box display="flex" justifyContent="flex-end" >
+                                <button className="submit-btn" onClick={handleAddMilestone} >Add Milestone</button>
+                            </Box>
+                        </>
+                        : ""
+                    }
+
+                    <div style={{ padding: "16px 0" }}>
+                        <Box >
+                            <ProjectOverviewCard
+                                project={{
+                                    projectId: managerViewSingleProjectDetail?.data?.project_id,
+                                    progress: 40, // Calculate if needed
+                                    customerName: managerViewSingleProjectDetail?.data?.project_sponsor,
+                                    customerLink: "",
+                                    billingType: managerViewSingleProjectDetail?.data?.category,
+                                    totalRate: managerViewSingleProjectDetail?.data?.business_unit,
+                                    status: "In Progress",
+                                    dateCreated: managerViewSingleProjectDetail?.data?.created_at?.split("T")[0],
+                                    startDate: managerViewSingleProjectDetail?.data?.start_date,
+                                    deadline: managerViewSingleProjectDetail?.data?.enddate,
+                                    estimatedHours: "90:00",
+                                    loggedHours: managerViewSingleProjectDetail?.data?.plant,
+                                    description: managerViewSingleProjectDetail?.data?.project_description,
+                                    projectManager: managerViewSingleProjectDetail?.data?.project_manager,
+                                    projectName: managerViewSingleProjectDetail?.data?.project_name,
+                                    projectSponsor: managerViewSingleProjectDetail?.data?.project_sponsor,
+                                    // teamMember: managerViewSingleProjectDetail?.data?.teammember?.map((val, i) => val.name),
+                                    teamMember: managerViewSingleProjectDetail?.data?.teammembers?.map((member) => member.name),
+                                    product: managerViewSingleProjectDetail?.data?.product,
+                                }}
+                            />
+                        </Box>
+
+                    </div>
+
 
                 </div>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
                 <CommonTable
-                    columns={userViewMilestoneProjectTableHead}
+                    columns={managerViewMilestoneProjectTableHead}
                     data={
-                        Array.isArray(getMilestonesByProjectForUserDetail?.data)
-                            ? getMilestonesByProjectForUserDetail.data
+                        Array.isArray(getMilestonesByProjectForManagerDetail?.data)
+                            ? getMilestonesByProjectForManagerDetail?.data
                             : []
                     }
                     onActionClick={handleActionClick}
                 />
 
-                <UserAddMilestoneModal
+                <ManagerAddMilestoneModal
                     openModal={open}
                     setOpenModal={() => setOpen(false)}
-                    projectRefId={selectedMilestone?.projectRefId}
-                    milestoneRefId={selectedMilestone?.milestoneRefId}
-                    milestoneData={selectedMilestone?.milestoneData}
+                    projectRefId={selectedMilestone?.projectRefId ?? projectRefId}
                 />
 
-                <UserUpdateMilestoneModal
+                <ManagerViewMilestoneModal
                     openModal={openUpdate}
                     setOpenModal={() => setOpenUpdate(false)}
                     projectRefId={selectedMilestone?.projectRefId}
@@ -203,7 +216,7 @@ export default function ProjectDashboard() {
                 />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-                <AddNewTask />
+                <ProjectTaskList />
             </CustomTabPanel>
         </Box>
     );

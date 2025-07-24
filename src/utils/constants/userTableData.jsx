@@ -15,6 +15,9 @@ export const userProjectListTableHead = [
         label: "Project Members", id: "teammembers.name"
     },
     {
+        label: "Project Status", id: "status"
+    },
+    {
         id: "actions",
         label: "Actions",
         type: "actions",
@@ -24,6 +27,7 @@ export const userProjectListTableHead = [
             // { key: "delete", label: "Delete", color: "error" },
         ],
     },
+   
 ]
 
 export const userProjectMilestoneSettingTableHead = [
@@ -89,29 +93,35 @@ export const userViewMilestoneProjectTableHead = [
 
 export const userTaskListTableHead = [
     {
-        label: "Project Name", id: "project_name"
+        label: "Milestone Name", id: "milestone_name"
     },
+    {
+        label: "Task Name", id: "tasks.task_name",
+    },
+    {
+        label: "Task Worked Date", id: "tasks.date"
+    },
+    {
+        label: "Task Description", id: "tasks.description"
+    },
+]
+
+export const managerTaskListTableHead = [
+
     {
         label: "Milestone Name", id: "milestone_name"
     },
     {
-        label: "Task Name", id: "task_name"
+        label: "Task Name", id: "tasks.task_name"
     },
     {
-        label: "Project Members", id: "teammembers.name"
+        label: "Task Worked Date", id: "tasks.date"
     },
     {
-        label: "Date", id: "date"
+        label: "Task Worked Member", id: "tasks.assigned_user_name"
     },
     {
-        id: "actions",
-        label: "Actions",
-        type: "actions",
-        actions: [
-            { key: "view", label: "View", color: "primary" },
-            // { key: "edit", label: "Edit", color: "secondary" },
-            // { key: "delete", label: "Delete", color: "error" },
-        ],
+        label: "Task Description", id: "tasks.description"
     },
 ]
 
@@ -161,7 +171,36 @@ export const managerProjectListTableHead = [
         label: "Project Members", id: "teammembers.name"
     },
     {
-        label: "Status", id: "project_status"
+        label: "Project Status", id: "project_status"
+    },
+    {
+        id: "actions",
+        label: "Actions",
+        type: "actions",
+        actions: [
+            { key: "view", label: "View", color: "primary" },
+            // { key: "edit", label: "Edit", color: "secondary" },
+            // { key: "delete", label: "Delete", color: "error" },
+        ],
+    },
+   
+]
+
+export const managerTeamMemberProjectListTableHead = [
+    {
+        label: "Project Name", id: "project_name"
+    },
+    {
+        label: "Plant", id: "plant"
+    },
+    {
+        label: "Start Date", id: "start_date"
+    },
+    {
+        label: "End Date", id: "enddate"
+    },
+    {
+        label: "Status", id: "status"
     },
     {
         id: "actions",

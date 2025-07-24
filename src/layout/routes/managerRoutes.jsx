@@ -4,6 +4,9 @@ import ProjectList from '../../pages/manager/ProjectList'
 import AddProjectForm from '../../componenets/manager/AddProjects'
 import ProjectOverview from '../../componenets/manager/ProjectOverview'
 import ManagerTeamMembers from '../../pages/manager/TeamMembers'
+import ProjectDashboard from '../../componenets/manager/ProjectDashboard'
+import ProjectTaskList from '../../componenets/manager/ProjectTaskList'
+import TeamMemberProjectList from '../../componenets/manager/TeamProjectList'
 
 const ManagerRoutes = [
   {
@@ -18,7 +21,7 @@ const ManagerRoutes = [
         path: "projects",
         element: <ProjectList />,
       },
-        {
+      {
         path: "teamMembers",
         element: <ManagerTeamMembers />,
       },
@@ -26,10 +29,20 @@ const ManagerRoutes = [
         path: "addNewProject",
         element: <AddProjectForm />,
       },
-    
+
       {
         path: "viewProject",
-        element: <ProjectOverview />,
+        element: <ProjectDashboard />,
+      },
+
+      {
+        path: "viewProjectTaskList",
+        element: <ProjectTaskList />,
+      },
+      
+      {
+        path: "viewTeamProjectList",
+        element: <TeamMemberProjectList />,
       },
     ],
   }

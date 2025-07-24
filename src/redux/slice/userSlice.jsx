@@ -23,8 +23,8 @@ const userSlice = createSlice({
         getMilestonesChartByProjectForUserIsLoading: false,
         usermilestoneListByProjectForTaskUserDetail: false,
         usermilestoneListByProjectForTaskUserIsLoading: [],
-        userProjectMemberListByProjectForTaskUserDetail: false,
-        userProjectMemberListByProjectForTaskUserIsLoading: false
+        // userProjectMemberListByProjectForTaskUserDetail: false,
+        // userProjectMemberListByProjectForTaskUserIsLoading: false
     },
     reducers: {
         userAddProjectReducer: (state, { payload }) => {
@@ -54,7 +54,6 @@ const userSlice = createSlice({
             state.getMilestonesByProjectForUserDetail = apiData;
             state.getMilestonesByProjectForUserIsLoading = isLoading;
         },
-
 
         getTaskListByProjectForUserReducer: (state, { payload }) => {
             const { apiData, isLoading } = payload;
@@ -86,15 +85,27 @@ const userSlice = createSlice({
             state.usermilestoneListByProjectForTaskUserIsLoading = isLoading;
         },
 
-        userProjectMemberListByProjectForTaskReducer: (state, { payload }) => {
-            const { apiData, isLoading } = payload;
-            state.userProjectMemberListByProjectForTaskUserDetail = apiData;
-            state.userProjectMemberListByProjectForTaskUserIsLoading = isLoading;
-        },
+        // userProjectMemberListByProjectForTaskReducer: (state, { payload }) => {
+        //     const { apiData, isLoading } = payload;
+        //     state.userProjectMemberListByProjectForTaskUserDetail = apiData;
+        //     state.userProjectMemberListByProjectForTaskUserIsLoading = isLoading;
+        // },
     },
 })
 
-export const { userAddProjectReducer, userProjectListReducer, userViewSingleProjectReducer, userAddMilestoneReducer, getMilestonesByProjectForUserReducer, updateMilestonesByProjectForUserReducer, getMilestonesChartByProjectForUserReducer, userAddTaskReducer, getTaskListByProjectForUserReducer, usermilestoneListByProjectForTaskReducer,userProjectMemberListByProjectForTaskReducer } = userSlice.actions;
+export const {
+    userAddProjectReducer,
+    userProjectListReducer,
+    userViewSingleProjectReducer,
+    userAddMilestoneReducer,
+    getMilestonesByProjectForUserReducer,
+    updateMilestonesByProjectForUserReducer,
+    getMilestonesChartByProjectForUserReducer,
+    userAddTaskReducer,
+    getTaskListByProjectForUserReducer,
+    usermilestoneListByProjectForTaskReducer,
+    // userProjectMemberListByProjectForTaskReducer 
+} = userSlice.actions;
 
 export const userSelector = (state) => state.user;
 

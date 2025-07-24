@@ -3,7 +3,6 @@ import { showToast } from "../../componenets/common/Toast/toastServices";
 import axios from "axios";
 import { handleSesssionStorage } from "../../utils/helperFunction";
 
-console.log(ADMIN_BASE_URL, "ADMIN_BASE_URL");
 // export const Apiservice = async (method, url, body, params) => {
 //   const accessToken =
 //     typeof window !== "undefined" ? handleSesssionStorage("get", "token") : "";

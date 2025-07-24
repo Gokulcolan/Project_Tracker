@@ -20,9 +20,10 @@ import { useDispatch, useSelector } from "react-redux";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
+    getTaskListByProjectForUserApi,
     userAddTaskApi,
     userMilestoneListByProjectForTaskApi,
-    userProjectMembersListForTaskApi,
+    // userProjectMembersListForTaskApi,
 } from "../../../redux/action/userAction";
 import { userSelector } from "../../../redux/slice/userSlice";
 
@@ -33,11 +34,11 @@ const UserAddNewTaskModal = ({
 }) => {
     const [task, setTask] = useState([]);
     const [milestoneName, setMilestoneName] = useState([]);
-    const [projectMemberName, setProjectMemberName] = useState([]);
-
+    // const [projectMemberName, setProjectMemberName] = useState([]);
 
     const dispatch = useDispatch();
-    const { usermilestoneListByProjectForTaskUserDetail, userProjectMemberListByProjectForTaskUserDetail } = useSelector(userSelector);
+    const { usermilestoneListByProjectForTaskUserDetail } = useSelector(userSelector);
+
     useEffect(() => {
         if (openModal) {
             setTask([
@@ -45,7 +46,7 @@ const UserAddNewTaskModal = ({
                     milestone_ref_id: "",
                     task_name: "",
                     date: null,
-                    done_by: "",
+                    // done_by: "",
                     description: "",
                 },
             ]);
@@ -55,19 +56,13 @@ const UserAddNewTaskModal = ({
     useEffect(() => {
         if (openModal && projectRefId) {
             dispatch(userMilestoneListByProjectForTaskApi(projectRefId));
-            dispatch(userProjectMembersListForTaskApi(projectRefId));
+            // dispatch(userProjectMembersListForTaskApi(projectRefId));
         }
     }, [openModal, projectRefId]);
 
     useEffect(() => {
         if (usermilestoneListByProjectForTaskUserDetail?.data) {
             setMilestoneName(usermilestoneListByProjectForTaskUserDetail.data);
-        }
-    }, [usermilestoneListByProjectForTaskUserDetail]);
-
-    useEffect(() => {
-        if (userProjectMemberListByProjectForTaskUserDetail?.data) {
-            setProjectMemberName(userProjectMemberListByProjectForTaskUserDetail.data);
         }
     }, [usermilestoneListByProjectForTaskUserDetail]);
 
@@ -86,7 +81,7 @@ const UserAddNewTaskModal = ({
                 milestone_ref_id: "",
                 task_name: "",
                 date: null,
-                done_by: "",
+                // done_by: "",
                 description: "",
             },
         ]);
@@ -104,19 +99,17 @@ const UserAddNewTaskModal = ({
 
     const handleSave = async () => {
         const payloads = task.map((t) => ({
-            milestone_ref_id: t.milestone_ref_id.trim(),
-            task_name: t.task_name.trim(),
+            milestone_ref_id: t.milestone_ref_id,
+            task_name: t.task_name,
             date: formatDate(t.date),
-            done_by: t.ref_id.trim(),
-            description: t.descriptions.trim(),
+            // done_by: t.ref_id,
+            description: t.descriptions,
         }));
 
         try {
-            for (const payload of payloads) {
-                await dispatch(userAddTaskApi(payload, projectRefId));
-            }
+            await dispatch(userAddTaskApi(payloads, projectRefId));
             // Optionally refresh the task list
-            // await dispatch(getTaskListByProjectForUserApi(projectRefId));
+            dispatch(getTaskListByProjectForUserApi(projectRefId));
             setOpenModal(false);
         } catch (error) {
             console.error("Error saving task:", error);
@@ -186,7 +179,7 @@ const UserAddNewTaskModal = ({
                                         label="Milestone"
                                         onChange={(e) => handleChange(index, "milestone_ref_id", e.target.value)}
                                     >
-                                        {milestoneName.map((milestone) => (
+                                        {milestoneName?.map((milestone) => (
                                             <MenuItem key={milestone.milestone_ref_id} value={milestone.milestone_ref_id}>
                                                 {milestone.milestone_name}
                                             </MenuItem>
@@ -203,22 +196,21 @@ const UserAddNewTaskModal = ({
                                     size="small"
                                     required
                                 />
-
-                                {/* Team Member Select */}
+{/* 
                                 <FormControl fullWidth size="small" required>
                                     <InputLabel>Project Members</InputLabel>
                                     <Select
-                                       value={m.ref_id}
+                                        value={m.ref_id}
                                         label="Project Members"
                                         onChange={(e) => handleChange(index, "ref_id", e.target.value)}
                                     >
-                                        {projectMemberName.map((val) => (
+                                        {projectMemberName?.map((val) => (
                                             <MenuItem key={val.ref_id} value={val.ref_id}>
                                                 {val.name}
                                             </MenuItem>
                                         ))}
                                     </Select>
-                                </FormControl>
+                                </FormControl> */}
 
                                 {/* Date Picker */}
                                 <DatePicker

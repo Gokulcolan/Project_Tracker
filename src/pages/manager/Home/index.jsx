@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import StatCards from '../../../componenets/common/cards'
+import StatCards from '../../../componenets/common/cards/statCards'
 import CommonTable from '../../../componenets/common/Table/commonTable'
 import { managerProjectListTableHead } from '../../../utils/constants/userTableData'
 import { useNavigate } from 'react-router-dom'

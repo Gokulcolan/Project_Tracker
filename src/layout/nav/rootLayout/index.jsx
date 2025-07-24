@@ -54,10 +54,7 @@ export default function RootLayout() {
     };
 
     const handleEditProfile = () => {
-        // handleSesssionStorage("remove", "ur");
-        // localStorage.clear();
-        // dispatch(logout()); // VERY important
-        // navigate("/", { replace: true }); // Prevents browser back to protected page
+       navigate("/editProfile")
     };
 
     const toggleDrawer = () => {

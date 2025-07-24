@@ -24,7 +24,7 @@ import { authSelector } from "../../../redux/slice/authSlice";
 
 
 const Login = () => {
-    
+
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const { loginDetail } = useSelector(authSelector)
@@ -190,7 +190,8 @@ const Login = () => {
                                     type="submit"
                                     fullWidth
                                     variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
+
+                                    sx={{ mt: 3, mb: 2, backgroundColor: "#00796b" }}
                                 >
                                     Login
                                 </Button>

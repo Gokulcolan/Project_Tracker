@@ -54,9 +54,9 @@ export function userMilestoneListByProjectForTaskApi(projectRefId) {
     return apiHelper(usermilestoneListByProjectForTaskReducer, "GET", `/api/user/project/${projectRefId}/milestones`);
 }
 
-export function userProjectMembersListForTaskApi(projectRefId) {
-    return apiHelper(userProjectMemberListByProjectForTaskReducer, "GET", `/api/user/project/${projectRefId}/team-members`);
-}
+// export function userProjectMembersListForTaskApi(projectRefId) {
+//     return apiHelper(userProjectMemberListByProjectForTaskReducer, "GET", `/api/user/project/${projectRefId}/team-members`);
+// }
 
 export function getTaskListByProjectForUserApi(projectRefId) {
     return apiHelper(getTaskListByProjectForUserReducer, "GET", `/api/user/milestones/${projectRefId}/task`);

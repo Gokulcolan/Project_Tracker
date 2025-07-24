@@ -132,7 +132,7 @@ const ManagerAddMilestoneModal = ({ openModal, setOpenModal, projectRefId,milest
                 >
                     {/* Header */}
                     <Typography variant="h6" fontWeight="bold" textAlign="center" mb={2}>
-                        Add Milestoneasdadsad
+                        Add Milestone
                     </Typography>
 
                     {/* Milestone rows */}
