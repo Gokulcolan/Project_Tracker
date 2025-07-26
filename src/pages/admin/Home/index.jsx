@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Button,
   Box,
@@ -13,7 +12,8 @@ import FormikTextField from "../../../componenets/common/Fields/formikTextField"
 import { useDispatch } from "react-redux";
 import { AdminAddUserApi } from "../../../redux/action/adminAction";
 
-const departments = ["PED", "Tool Design", "PMTC"];
+const departments = ["Alternator", "Starter", "Wiper", "Process Development - MFG", "Process Development - Assembly and AI"];
+
 const roles = ["manager", "user"];
 
 const AdminHome = () => {
@@ -25,6 +25,7 @@ const AdminHome = () => {
       name: "",
       email: "",
       department: "",
+      designation: "",
       role: "",
     },
     validationSchema: Yup.object({
@@ -34,6 +35,8 @@ const AdminHome = () => {
         .email("Invalid email format")
         .required("Email is required"),
       department: Yup.string().required("Department is required"),
+      designation: Yup.string().required("Designation is required"),
+
       role: Yup.string().required("Role is required"),
 
     }),
@@ -43,6 +46,7 @@ const AdminHome = () => {
         name: values.name,
         mailid: values.email,
         department: values.department,
+        designation: values.designation,
         role: values.role,
 
       };
@@ -88,6 +92,13 @@ const AdminHome = () => {
               </MenuItem>
             ))}
           </FormikTextField>
+          <FormikTextField
+            formik={formik}
+            name="designation"
+            label="Designation"
+            type="text"
+            required
+          />
 
           {/* Role */}
           <FormikTextField
