@@ -13,7 +13,7 @@ import FormikTextField from "../../../componenets/common/Fields/formikTextField"
 import { useDispatch } from "react-redux";
 import { AdminAddUserApi } from "../../../redux/action/adminAction";
 
-const departments = ["PED"];
+const departments = ["PED", "Tool Design", "PMTC"];
 const roles = ["manager", "user"];
 
 const AdminHome = () => {
@@ -35,7 +35,7 @@ const AdminHome = () => {
         .required("Email is required"),
       department: Yup.string().required("Department is required"),
       role: Yup.string().required("Role is required"),
-   
+
     }),
     onSubmit: (values) => {
       const payload = {
@@ -44,7 +44,7 @@ const AdminHome = () => {
         mailid: values.email,
         department: values.department,
         role: values.role,
-        
+
       };
       dispatch(AdminAddUserApi(payload));
     },

@@ -15,6 +15,7 @@ import UserAddMilestoneModal from "../../common/modal/userAddMileStoneModal";
 import UserUpdateMilestoneModal from "../../common/modal/userUpdateMilestoneModal";
 import AddNewTask from '../AddNewTask';
 import { Button } from '@mui/material';
+import ProjectApproval from '../ProjectApproval';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -87,6 +88,7 @@ export default function ProjectDashboard() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
     useEffect(() => {
         if (projectRefId) {
             dispatch(userViewSingleProjectApi(projectRefId));
@@ -144,36 +146,31 @@ export default function ProjectDashboard() {
                     <Tab label="Project Overview" {...a11yProps(0)} />
                     <Tab label="Milestones" {...a11yProps(1)} />
                     <Tab label="Task" {...a11yProps(2)} />
+                    <Tab label="Project Approval" {...a11yProps(3)} />
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                <div style={{ padding: "16px 0" }}>
-                    <Box >
-                        <ProjectOverviewCard
-                            project={{
-                                projectId: userViewSingleProjectDetail?.data?.project_id,
-                                progress: 40, // Calculate if needed
-                                customerName: userViewSingleProjectDetail?.data?.project_sponsor,
-                                customerLink: "",
-                                billingType: userViewSingleProjectDetail?.data?.category,
-                                totalRate: userViewSingleProjectDetail?.data?.business_unit,
-                                status: "In Progress",
-                                dateCreated: userViewSingleProjectDetail?.data?.created_at?.split("T")[0],
-                                startDate: userViewSingleProjectDetail?.data?.start_date,
-                                deadline: userViewSingleProjectDetail?.data?.enddate,
-                                estimatedHours: "90:00",
-                                loggedHours: userViewSingleProjectDetail?.data?.plant,
-                                description: userViewSingleProjectDetail?.data?.project_description,
-                                projectManager: userViewSingleProjectDetail?.data?.project_manager,
-                                projectName: userViewSingleProjectDetail?.data?.project_name,
-                                projectSponsor: userViewSingleProjectDetail?.data?.project_sponsor,
-                                teamMember: userViewSingleProjectDetail?.data?.teammember,
-                                product: userViewSingleProjectDetail?.data?.product,
-                            }}
-                        />
-                    </Box>
+                <ProjectOverviewCard
+                    project={{
+                        projectId: userViewSingleProjectDetail?.data?.project_id,
+                        Category: userViewSingleProjectDetail?.data?.category,
+                        BusinessUnit: userViewSingleProjectDetail?.data?.business_unit,
+                        status: userViewSingleProjectDetail?.data?.status,
+                        dateCreated: userViewSingleProjectDetail?.data?.created_at?.split("T")[0],
+                        startDate: userViewSingleProjectDetail?.data?.start_date,
+                        deadline: userViewSingleProjectDetail?.data?.enddate,
+                        Plant: userViewSingleProjectDetail?.data?.plant,
+                        description: userViewSingleProjectDetail?.data?.project_description,
+                        projectManager: userViewSingleProjectDetail?.data?.project_manager,
+                        projectName: userViewSingleProjectDetail?.data?.project_name,
+                        projectSponsor: userViewSingleProjectDetail?.data?.project_sponsor,
+                        teamMember: userViewSingleProjectDetail?.data?.teammembers
+                            ?.map((member) => member.name)
+                            .join(", "),
 
-                </div>
+                        product: userViewSingleProjectDetail?.data?.product,
+                    }}
+                />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
                 <CommonTable
@@ -204,6 +201,21 @@ export default function ProjectDashboard() {
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
                 <AddNewTask />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={3}>
+                <ProjectApproval
+                    project={{
+                        status: userViewSingleProjectDetail?.data?.status,
+                        startDate: userViewSingleProjectDetail?.data?.start_date,
+                        deadline: userViewSingleProjectDetail?.data?.enddate,
+                        projectManager: userViewSingleProjectDetail?.data?.project_manager,
+                        projectName: userViewSingleProjectDetail?.data?.project_name,
+                        projectSponsor: userViewSingleProjectDetail?.data?.project_sponsor,
+                        teamMember: userViewSingleProjectDetail?.data?.teammembers
+                            ?.map((member) => member.name)
+                            .join(", "),
+                    }}
+                />
             </CustomTabPanel>
         </Box>
     );

@@ -24,6 +24,29 @@ import { getManagerTeamMemberApi, managerAddProjectApi } from "../../../redux/ac
 import { managerSelector, resetManagerAddProjectDetail } from "../../../redux/slice/managerSlice";
 
 
+// const priorities = [
+//     { value: "Alternator ", label: "Alternator " },
+//     { value: "Starter ", label: "Starter " },
+//     { value: "Wiper ", label: "Wiper " },
+//     { value: "Special Motors ", label: "Special Motors " },
+//     { value: "SMCG", label: "SMCG" },
+//     { value: "SBD", label: "SBD" },
+// ];
+
+// const categories = [
+//     { value: "New Process Technology - Sustainable Growth ", label: "New Process Technology - Sustainable Growth " },
+//     { value: "Capacity enhancement (New lines / P&M) - Sustainable Growth ", label: "Capacity enhancement (New lines / P&M) - Sustainable Growth " },
+//     { value: "New lines to win New Business - Sustainable Growth", label: "New lines to win New Business - Sustainable Growth" },
+//     { value: "Model Lines (World Class Manufacturing) - Competitive Advantage ", label: "Model Lines (World Class Manufacturing) - Competitive Advantage " },
+//     { value: "Industry 4.0 - Competitive Advantage ", label: "Industry 4.0 - Competitive Advantage " },
+//     { value: "Cost reduction - Profitability ", label: "Cost reduction - Profitability " },
+//     { value: "Investment reduction - Profitability ", label: "Investment reduction - Profitability " },
+//     { value: "Manpower reduction - Profitability ", label: "Manpower reduction - Profitability " },
+//     { value: "New products Introduction - Customer Satisfaction", label: "New products Introduction - Customer Satisfaction" },
+//     { value: "Process Technology (Q Impr.) - Customer Satisfactio", label: "Process Technology (Q Impr.) - Customer Satisfactio" },
+// ];
+
+
 const priorities = [
     { value: "Low", label: "Low" },
     { value: "Medium", label: "Medium" },
@@ -38,15 +61,6 @@ const categories = [
     { value: "Research", label: "Research" },
 ];
 
-
-
-// const teammember = [
-//     { value: "Gokul", label: "Gokul" },
-//     { value: "Surya", label: "Surya" },
-//     { value: "Bala", label: "Bala" },
-//     { value: "Kani", label: "Kani" },
-//     { value: "sharon", label: "sharon" },
-// ];
 
 const validationSchema = Yup.object({
     project_id: Yup.string().required("Project ID is required"),
@@ -66,12 +80,17 @@ const AddProjectForm = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { getManagerTeamMemberDetail, managerAddProjectDetail } = useSelector(managerSelector);
-
+    const memberData = getManagerTeamMemberDetail?.data ?? [];
     const handleTeamMembers = () => {
         dispatch(getManagerTeamMemberApi());
     };
 
-    const TeamMemberOptions = getManagerTeamMemberDetail?.data?.map((val, i) => ({
+    const TeamMemberOptions = memberData?.map((val, i) => ({
+        value: val.ref_id,
+        label: val.name,
+    }))
+
+    const TeamLeadOptions = memberData?.map((val, i) => ({
         value: val.ref_id,
         label: val.name,
     }))
@@ -88,16 +107,27 @@ const AddProjectForm = () => {
             start_date: dayjs(),
             enddate: null,
             project_description: "",
-            teammember_ref_ids: ""
+            teammember_ref_ids: [],
+            project_leader_ref_id: []
         },
         // validationSchema,
         onSubmit: (values) => {
+
+            // if (!getManagerTeamMemberDetail?.data) return;
             const selectedMembers = getManagerTeamMemberDetail?.data?.filter((member) =>
                 values.teammember_ref_ids.includes(member.ref_id)
             );
+            const leadMembers = getManagerTeamMemberDetail?.data?.filter((member) =>
+                values.project_leader_ref_id.includes(member.ref_id)
+            );
             const payload = {
                 ...values,
-                teammember_ref_ids: selectedMembers.map((member) => ({
+                teammember_ref_ids: selectedMembers?.map((member) => ({
+
+                    ref_id: member.ref_id,
+                    name: member.name
+                })),
+                project_leader_ref_id: leadMembers?.map((member) => ({
 
                     ref_id: member.ref_id,
                     name: member.name
@@ -107,12 +137,6 @@ const AddProjectForm = () => {
             };
             dispatch(managerAddProjectApi(payload));
 
-            // if (managerAddProjectDetail?.success === true) {
-            //     navigate("/managerDashboard/home");
-            // } else {
-            //     // optional: show error toast or message
-            //     console.warn("Project creation failed");
-            // }
         },
     });
 
@@ -122,7 +146,7 @@ const AddProjectForm = () => {
             dispatch(resetManagerAddProjectDetail());
         }
     }, [managerAddProjectDetail]);
-    
+
     useEffect(() => {
         dispatch(resetManagerAddProjectDetail());
     }, []);
@@ -189,9 +213,19 @@ const AddProjectForm = () => {
                         <FormikDropdown
                             formik={formik}
                             name="teammember_ref_ids"
-                            label="Team Members"
+                            label="Project Members"
                             onOpen={handleTeamMembers}  // Correct way to trigger data loading
                             options={TeamMemberOptions}
+                            multiple
+                            required
+                        />
+
+                        <FormikDropdown
+                            formik={formik}
+                            name="project_leader_ref_id"
+                            label="Project Lead"
+                            onOpen={handleTeamMembers}  // Correct way to trigger data loading
+                            options={TeamLeadOptions}
                             multiple
                             required
                         />

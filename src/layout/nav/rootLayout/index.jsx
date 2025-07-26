@@ -14,6 +14,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Layout } from "./layout";
 import { logout } from "../../../redux/slice/authSlice";
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import NotificationCard from "../../../componenets/common/cards/notificationCard";
 
 const drawerWidth = 280;
 
@@ -36,6 +37,7 @@ const AppBar = styled(MuiAppBar)(({ theme, open }) => ({
 export default function RootLayout() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [drawerOpen, setDrawerOpen] = useState(true); // Sidebar open state
+    const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -54,11 +56,20 @@ export default function RootLayout() {
     };
 
     const handleEditProfile = () => {
-       navigate("/editProfile")
+        navigate("/editProfile")
     };
 
     const toggleDrawer = () => {
         setDrawerOpen(!drawerOpen); // Toggle the sidebar open state
+    };
+
+
+    const handleNotificationClick = (event) => {
+        setNotificationAnchorEl(event.currentTarget);
+    };
+
+    const handleNotificationClose = () => {
+        setNotificationAnchorEl(null);
     };
 
     return (
@@ -110,12 +121,49 @@ export default function RootLayout() {
                         <IconButton
                             size="large"
                             aria-label="show notifications"
+                            onClick={handleNotificationClick}
                             sx={{ color: "#00796b", mr: 2 }}
                         >
-                            <Badge badgeContent={7} color="error">
+                            <Badge badgeContent={3} color="error">
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
+
+                        <Menu
+                            anchorEl={notificationAnchorEl}
+                            open={Boolean(notificationAnchorEl)}
+                            onClose={handleNotificationClose}
+                            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                            transformOrigin={{ vertical: "top", horizontal: "right" }}
+                            PaperProps={{
+                                elevation: 3,
+                                sx: {
+                                    width: 330,
+                                    maxHeight: 400,
+                                    mt: 1.5,
+                                    borderRadius: 2,
+                                    p: 1,
+                                    boxShadow: "0px 4px 12px rgba(0,0,0,0.15)",
+                                },
+                            }}
+                        >
+                            {/* Sample Notification Items */}
+                            <NotificationCard
+                                title="New Task Assigned"
+                                message="You've been added to the Q3 milestone."
+                                timestamp="2 mins ago"
+                            />
+                            <NotificationCard
+                                title="Project Approved"
+                                message="Manager approved the project."
+                                timestamp="10 mins ago"
+                            />
+                            <NotificationCard
+                                title="Reminder"
+                                message="Stand-up meeting at 4 PM"
+                                timestamp="1 hour ago"
+                            />
+                        </Menu>
 
                         <Avatar
                             sx={{ cursor: "pointer", backgroundColor: "#00796b" }}
@@ -123,7 +171,7 @@ export default function RootLayout() {
                         >
                             <AccountCircleIcon sx={{ fontSize: "40px" }} />
                         </Avatar>
-                    </Box>  
+                    </Box>
 
                     <Menu
                         anchorEl={anchorEl}

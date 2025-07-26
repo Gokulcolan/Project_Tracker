@@ -16,6 +16,7 @@ import ManagerAddMilestoneModal from '../../common/modal/managerAddMilestoneModa
 import { managerSelector } from '../../../redux/slice/managerSlice';
 import { managerViewMilestoneProjectTableHead } from '../../../utils/constants/userTableData';
 import ProjectTaskList from '../ProjectTaskList';
+import ProjectApproval from '../ProjectApproval';
 
 
 function CustomTabPanel(props) {
@@ -145,6 +146,8 @@ export default function ProjectDashboard() {
                     <Tab label="Project Overview" {...a11yProps(0)} />
                     <Tab label="Milestones" {...a11yProps(1)} />
                     <Tab label="Task" {...a11yProps(2)} />
+                    <Tab label="Project Approval" {...a11yProps(3)} />
+
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
@@ -163,23 +166,24 @@ export default function ProjectDashboard() {
                             <ProjectOverviewCard
                                 project={{
                                     projectId: managerViewSingleProjectDetail?.data?.project_id,
-                                    progress: 40, // Calculate if needed
-                                    customerName: managerViewSingleProjectDetail?.data?.project_sponsor,
-                                    customerLink: "",
-                                    billingType: managerViewSingleProjectDetail?.data?.category,
-                                    totalRate: managerViewSingleProjectDetail?.data?.business_unit,
-                                    status: "In Progress",
+                                    // progress: 40, // Calculate if needed
+                                    // customerName: managerViewSingleProjectDetail?.data?.project_sponsor,
+                                    // customerLink: "",
+                                    // Category: managerViewSingleProjectDetail?.data?.category,
+                                    BusinessUnit: managerViewSingleProjectDetail?.data?.business_unit,
+                                    status: managerViewSingleProjectDetail?.data?.status,
                                     dateCreated: managerViewSingleProjectDetail?.data?.created_at?.split("T")[0],
                                     startDate: managerViewSingleProjectDetail?.data?.start_date,
                                     deadline: managerViewSingleProjectDetail?.data?.enddate,
-                                    estimatedHours: "90:00",
-                                    loggedHours: managerViewSingleProjectDetail?.data?.plant,
+                                    // estimatedHours: "90:00",
+                                    Plant: managerViewSingleProjectDetail?.data?.plant,
                                     description: managerViewSingleProjectDetail?.data?.project_description,
                                     projectManager: managerViewSingleProjectDetail?.data?.project_manager,
                                     projectName: managerViewSingleProjectDetail?.data?.project_name,
                                     projectSponsor: managerViewSingleProjectDetail?.data?.project_sponsor,
-                                    // teamMember: managerViewSingleProjectDetail?.data?.teammember?.map((val, i) => val.name),
-                                    teamMember: managerViewSingleProjectDetail?.data?.teammembers?.map((member) => member.name),
+                                    teamMember: managerViewSingleProjectDetail?.data?.teammembers
+                                        ?.map((member) => member.name)
+                                        .join(", "),
                                     product: managerViewSingleProjectDetail?.data?.product,
                                 }}
                             />
@@ -218,6 +222,23 @@ export default function ProjectDashboard() {
             <CustomTabPanel value={value} index={2}>
                 <ProjectTaskList />
             </CustomTabPanel>
+            <CustomTabPanel value={value} index={3}>
+                <ProjectApproval
+                    project={{
+                        status: managerViewSingleProjectDetail?.data?.status,
+                        startDate: managerViewSingleProjectDetail?.data?.start_date,
+                        deadline: managerViewSingleProjectDetail?.data?.enddate,
+                        projectManager: managerViewSingleProjectDetail?.data?.project_manager,
+                        projectName: managerViewSingleProjectDetail?.data?.project_name,
+                        projectSponsor: managerViewSingleProjectDetail?.data?.project_sponsor,
+                        teamMember: managerViewSingleProjectDetail?.data?.teammembers
+                            ?.map((member) => member.name)
+                            .join(", "),
+                    }}
+
+                />
+            </CustomTabPanel>
+
         </Box>
     );
 }

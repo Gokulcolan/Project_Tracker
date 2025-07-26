@@ -5,6 +5,7 @@ import {
   TextField,
   Typography,
   Stack,
+  MenuItem,
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -90,6 +91,26 @@ const UserUpdateMilestoneModal = ({
       alert("Failed to save milestone. Please try again.");
     }
   };
+
+  const accountableFunctionOptions = [
+    "Finance",
+    "Management",
+    "Central Purchase",
+    "Unit Purchase",
+    "WED",
+    "MSE",
+    "Tool Room",
+    "Tool design",
+    "Standards Room",
+    "PMTC",
+    "Suppliers",
+    "Methods",
+    "Product design",
+    "Quality",
+    "Central Quality",
+    "Production",
+  ];
+
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -188,6 +209,7 @@ const UserUpdateMilestoneModal = ({
                   onChange={(e) => handleChange("bottleneck_issue", e.target.value)}
                   fullWidth
                   size="small"
+                  disabled={!!milestoneData.bottleneck_issue}
                 />
 
                 <DatePicker
@@ -195,14 +217,33 @@ const UserUpdateMilestoneModal = ({
                   value={form.current_outlook_date}
                   onChange={(d) => handleChange("current_outlook_date", d)}
                   slotProps={{ textField: { size: "small", fullWidth: true } }}
+                  disabled={!!milestoneData.current_outlook_date}
                 />
 
                 <TextField
+                  select
                   label="Accountable Function"
                   value={form.accountable_function}
                   onChange={(e) => handleChange("accountable_function", e.target.value)}
                   fullWidth
                   size="small"
+                  disabled={!!milestoneData.accountable_function}
+                >
+                  {accountableFunctionOptions.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
+
+                <Typography>
+                  If the Overdue project is <strong>Completed</strong>, please enter the <em>Actual Completion Date</em>.
+                </Typography>
+                <DatePicker
+                  label="Overdue Project Completed Date"
+                  value={form.actualDate}
+                  onChange={(d) => handleChange("actualDate", d)}
+                  slotProps={{ textField: { size: "small", fullWidth: true } }}
                 />
               </>
             )}

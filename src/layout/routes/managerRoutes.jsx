@@ -2,11 +2,11 @@ import ManagerHome from '../../pages/manager/Home'
 import RootLayout from '../nav/rootLayout'
 import ProjectList from '../../pages/manager/ProjectList'
 import AddProjectForm from '../../componenets/manager/AddProjects'
-import ProjectOverview from '../../componenets/manager/ProjectOverview'
 import ManagerTeamMembers from '../../pages/manager/TeamMembers'
 import ProjectDashboard from '../../componenets/manager/ProjectDashboard'
 import ProjectTaskList from '../../componenets/manager/ProjectTaskList'
 import TeamMemberProjectList from '../../componenets/manager/TeamProjectList'
+import ProjectApproval from '../../componenets/manager/ProjectApproval'
 
 const ManagerRoutes = [
   {
@@ -39,10 +39,14 @@ const ManagerRoutes = [
         path: "viewProjectTaskList",
         element: <ProjectTaskList />,
       },
-      
+
       {
         path: "viewTeamProjectList",
         element: <TeamMemberProjectList />,
+      },
+      {
+        path: "projectApproval",
+        element: <ProjectApproval />,
       },
     ],
   }

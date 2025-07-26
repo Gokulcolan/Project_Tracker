@@ -104,28 +104,49 @@ const CommonTable = ({
                         ))}
                       </Box>
                     ) : column.id === "status" || column.id === "project_status" ? (
-                      <Box
-                        sx={{
-                          display: "inline-block",
-                          px: 1.5,
-                          py: 0.5,
-                          borderRadius: 2,
-                          color: "#fff",
-                          fontWeight: 500,
-                          fontSize: "0.75rem",
-                          textTransform: "capitalize",
-                          backgroundColor:
-                            row[column.id] === "Completed"
-                              ? "#4caf50"
-                              : row[column.id] === "Yet to Start" || row[column.id] === "Not Started"
-                                ? "#ff9800"
-                                : row[column.id] === "In Progress"
-                                  ? "#2196f3"
-                                  : row[column.id] === "Overdue" || row[column.id] === "Incomplete" ? "red" : "#9e9e9e", // default gray
-                        }}
-                      >
-                        {row[column.id] ?? "-"}
-                      </Box>) : (
+                      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+                        <Box
+                          sx={{
+                            display: "inline-block",
+                            px: 1.5,
+                            py: 0.5,
+                            borderRadius: 2,
+                            color: "#fff",
+                            fontWeight: 500,
+                            fontSize: "0.75rem",
+                            textTransform: "capitalize",
+                            backgroundColor:
+                              row[column.id] === "Waiting for Manager Approval"
+                                ? "#000000ff" :
+                                row[column.id] === "Completed"
+                                  ? "#4caf50"
+                                  : row[column.id] === "Yet to Start" || row[column.id] === "Not Started"
+                                    ? "#ff9800"
+                                    : row[column.id] === "In Progress"
+                                      ? "#2196f3"
+                                      : row[column.id] === "Overdue" || row[column.id] === "Incomplete" || row[column.id] === "Exceeded Outlook" ? "red" : "#9e9e9e", // default gray
+                          }}
+                        >
+                          <Box>{row[column.id] ?? "-"}</Box>
+                        </Box>
+                        {row.overdue_days > 0 && (
+                          <Box
+                            sx={{
+                              fontSize: "0.65rem",
+                              mt: 0.5,
+                              backgroundColor: "#d32f2f",
+                              color: "#fff",
+                              px: 1,
+                              py: 0.3,
+                              borderRadius: 1,
+                              textAlign: "center",
+                            }}
+                          >
+                            {row.overdue_days} days overdue
+                          </Box>
+                        )}
+                      </Box>
+                    ) : (
                       row[column.id] ?? "-"
                     )}
                   </StyledTableCell>
