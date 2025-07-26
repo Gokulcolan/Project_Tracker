@@ -1,5 +1,5 @@
 import { Apiservice } from "../api/apiService";
-import { getMilestonesByProjectForUserReducer, getMilestonesChartByProjectForUserReducer, getTaskListByProjectForUserReducer, updateMilestonesByProjectForUserReducer, userAddMilestoneReducer, userAddProjectReducer, userAddTaskReducer, usermilestoneListByProjectForTaskReducer, userProjectListReducer, userProjectMemberListByProjectForTaskReducer, userTeamMemberListByProjectForTaskReducer, userViewSingleProjectReducer } from "../slice/userSlice";
+import { askForProjectApprovalUserReducer, getMilestonesByProjectForUserReducer, getMilestonesChartByProjectForUserReducer, getTaskListByProjectForUserReducer, updateMilestonesByProjectForUserReducer, userAddMilestoneReducer, userAddProjectReducer, userAddTaskReducer, usermilestoneListByProjectForTaskReducer, userProjectListReducer, userProjectMemberListByProjectForTaskReducer, userTeamMemberListByProjectForTaskReducer, userViewSingleProjectReducer } from "../slice/userSlice";
 
 export function apiHelper(apiReducer, method, apiURL, data = "") {
     return async (dispatch) => {
@@ -61,4 +61,10 @@ export function userMilestoneListByProjectForTaskApi(projectRefId) {
 export function getTaskListByProjectForUserApi(projectRefId) {
     return apiHelper(getTaskListByProjectForUserReducer, "GET", `/api/user/milestones/${projectRefId}/task`);
 }
+
+export function askForProjectApprovalUserApi(payload, projectRefId) {
+    return apiHelper(askForProjectApprovalUserReducer, "POST", `/api/user/project/${projectRefId}/request-approval`, payload);
+}
+
+
 

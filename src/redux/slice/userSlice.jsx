@@ -23,8 +23,8 @@ const userSlice = createSlice({
         getMilestonesChartByProjectForUserIsLoading: false,
         usermilestoneListByProjectForTaskUserDetail: false,
         usermilestoneListByProjectForTaskUserIsLoading: [],
-        // userProjectMemberListByProjectForTaskUserDetail: false,
-        // userProjectMemberListByProjectForTaskUserIsLoading: false
+        askForProjectApprovalUserDetail: false,
+        askForProjectApprovalIsLoading: false
     },
     reducers: {
         userAddProjectReducer: (state, { payload }) => {
@@ -85,6 +85,12 @@ const userSlice = createSlice({
             state.usermilestoneListByProjectForTaskUserIsLoading = isLoading;
         },
 
+        askForProjectApprovalUserReducer: (state, { payload }) => {
+            const { apiData, isLoading } = payload;
+            state.askForProjectApprovalUserDetail = apiData;
+            state.askForProjectApprovalIsLoading = isLoading;
+        },
+
         // userProjectMemberListByProjectForTaskReducer: (state, { payload }) => {
         //     const { apiData, isLoading } = payload;
         //     state.userProjectMemberListByProjectForTaskUserDetail = apiData;
@@ -104,6 +110,7 @@ export const {
     userAddTaskReducer,
     getTaskListByProjectForUserReducer,
     usermilestoneListByProjectForTaskReducer,
+    askForProjectApprovalUserReducer
     // userProjectMemberListByProjectForTaskReducer 
 } = userSlice.actions;
 

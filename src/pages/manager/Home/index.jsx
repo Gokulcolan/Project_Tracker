@@ -15,7 +15,6 @@ const ManagerHome = () => {
   const dispatch = useDispatch()
   const { managerProjectListDetail } = useSelector(managerSelector)
 
-  console.log(managerProjectListDetail, "managerProjectListDetail")
 
   const Username = handleSesssionStorage("get", "name")
 

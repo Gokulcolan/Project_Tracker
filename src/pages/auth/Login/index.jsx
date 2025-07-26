@@ -67,141 +67,143 @@ const Login = () => {
     useEffect(() => {
         const token = loginDetail?.data?.token;
         const Username = loginDetail?.data?.user?.name
+        const user = loginDetail?.data?.user;
         handleSesssionStorage("add", "token", token);
         handleSesssionStorage("add", "name", Username);
-        const userRole = loginDetail?.data?.user?.role;
+        handleSesssionStorage("add", "user", JSON.stringify(user)) ;
+    const userRole = loginDetail?.data?.user?.role;
 
-        if (!token || !userRole) return;
+    if (!token || !userRole) return;
 
-        const role = userRole.toLowerCase();
-        const roleNumber = role === "admin" ? 1 : role === "manager" ? 2 : 3;
+    const role = userRole.toLowerCase();
+    const roleNumber = role === "admin" ? 1 : role === "manager" ? 2 : 3;
 
-        handleSesssionStorage("add", "ur", roleNumber);
+    handleSesssionStorage("add", "ur", roleNumber);
 
-        const roleRouteMap = {
-            admin: "/adminDashboard/home",
-            manager: "/managerDashboard/home",
-            user: "/userDashboard/home",
-        };
+    const roleRouteMap = {
+        admin: "/adminDashboard/home",
+        manager: "/managerDashboard/home",
+        user: "/userDashboard/home",
+    };
 
-        const targetPath = roleRouteMap[role];
+    const targetPath = roleRouteMap[role];
 
-        navigate(targetPath);
-    }, [loginDetail, navigate]);
+    navigate(targetPath);
+}, [loginDetail, navigate]);
 
-    return (
-        <div>
-            <div className="bgLogin" style={{ position: "relative", height: "100vh" }}>
-                <Container component="main" maxWidth="xs">
-                    <Box
-                        sx={{
-                            height: "100vh",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            flexDirection: "column",
+return (
+    <div>
+        <div className="bgLogin" style={{ position: "relative", height: "100vh" }}>
+            <Container component="main" maxWidth="xs">
+                <Box
+                    sx={{
+                        height: "100vh",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "column",
+                    }}
+                >
+                    {/* Header */}
+                    <div
+                        style={{
+                            position: "absolute",
+                            top: "20px",
+                            width: "100%",
+                            textAlign: "center",
                         }}
                     >
-                        {/* Header */}
-                        <div
+                        <h2
                             style={{
-                                position: "absolute",
-                                top: "20px",
-                                width: "100%",
-                                textAlign: "center",
+                                fontSize: "48px",
+                                color: "#FFFFFF",
+                                textShadow: "2px 2px 6px rgba(0, 0, 0, 0.7)",
+                                fontWeight: "bold",
                             }}
                         >
-                            <h2
-                                style={{
-                                    fontSize: "48px",
-                                    color: "#FFFFFF",
-                                    textShadow: "2px 2px 6px rgba(0, 0, 0, 0.7)",
-                                    fontWeight: "bold",
-                                }}
-                            >
-                                PED - Project Tracker
-                            </h2>
+                            PED - Project Tracker
+                        </h2>
+                    </div>
+
+                    {/* Login Form */}
+                    <Paper elevation={6} sx={{ padding: 4, borderRadius: 2, width: "100%" }}>
+                        <div style={{ textAlign: "center" }}>
+                            <img src={Logo} alt="TVS Lucas Logo" />
                         </div>
-
-                        {/* Login Form */}
-                        <Paper elevation={6} sx={{ padding: 4, borderRadius: 2, width: "100%" }}>
-                            <div style={{ textAlign: "center" }}>
-                                <img src={Logo} alt="TVS Lucas Logo" />
-                            </div>
-                            <br />
-                            <Box
-                                component="form"
-                                noValidate
-                                sx={{ mt: 1 }}
-                                onSubmit={formik.handleSubmit}
-                            >
-                                {/* <FormikDropdown label="Role" name="Role" options={RoleOptions} formik={formik} /> */}
-                                <FormikTextField
-                                    formik={formik}
-                                    name="Username"
-                                    label="Username"
-                                    type="text"
-                                    required
-                                    error={formik.touched.Username && Boolean(formik.errors.Username)}
-                                    helperText={formik.touched.Username && formik.errors.Username}
+                        <br />
+                        <Box
+                            component="form"
+                            noValidate
+                            sx={{ mt: 1 }}
+                            onSubmit={formik.handleSubmit}
+                        >
+                            {/* <FormikDropdown label="Role" name="Role" options={RoleOptions} formik={formik} /> */}
+                            <FormikTextField
+                                formik={formik}
+                                name="Username"
+                                label="Username"
+                                type="text"
+                                required
+                                error={formik.touched.Username && Boolean(formik.errors.Username)}
+                                helperText={formik.touched.Username && formik.errors.Username}
+                            />
+                            <TextField
+                                name="password"
+                                label="Password"
+                                type={showPassword ? "text" : "password"}
+                                fullWidth
+                                required
+                                variant="outlined"
+                                margin="normal"
+                                value={formik.values.password}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.password && Boolean(formik.errors.password)}
+                                helperText={formik.touched.password && formik.errors.password}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                                edge="end"
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            <Box display="flex" justifyContent="space-between">
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            name="remember"
+                                            color="primary"
+                                            checked={formik.values.remember}
+                                            onChange={formik.handleChange}
+                                        />
+                                    }
+                                    label="Remember me"
                                 />
-                                <TextField
-                                    name="password"
-                                    label="Password"
-                                    type={showPassword ? "text" : "password"}
-                                    fullWidth
-                                    required
-                                    variant="outlined"
-                                    margin="normal"
-                                    value={formik.values.password}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    error={formik.touched.password && Boolean(formik.errors.password)}
-                                    helperText={formik.touched.password && formik.errors.password}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleClickShowPassword}
-                                                    onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                >
-                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                                <Box display="flex" justifyContent="space-between">
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                name="remember"
-                                                color="primary"
-                                                checked={formik.values.remember}
-                                                onChange={formik.handleChange}
-                                            />
-                                        }
-                                        label="Remember me"
-                                    />
-                                </Box>
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-
-                                    sx={{ mt: 3, mb: 2, backgroundColor: "#00796b" }}
-                                >
-                                    Login
-                                </Button>
                             </Box>
-                        </Paper>
-                    </Box>
-                </Container>
-            </div>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+
+                                sx={{ mt: 3, mb: 2, backgroundColor: "#00796b" }}
+                            >
+                                Login
+                            </Button>
+                        </Box>
+                    </Paper>
+                </Box>
+            </Container>
         </div>
-    )
+    </div>
+)
 }
 
 export default Login

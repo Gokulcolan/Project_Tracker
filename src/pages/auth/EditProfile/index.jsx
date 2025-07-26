@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -7,17 +7,32 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useSelector } from "react-redux";
+import { authSelector } from "../../../redux/slice/authSlice";
 
-const EditProfile = ({ user }) => {
+const EditProfile = () => {
+  const { loginDetail } = useSelector(authSelector);
+  console.log(loginDetail,"loginDetail")
+
   const [formData, setFormData] = useState({
-    name: user.name || "",
-    mailid: user.mailid || "",
-    username: user.username || "",
-    department: user.department || "",
-    project_manager_name: user.project_manager_name || "",
-    ref_id: user.ref_id || "",
-    password: "",
+    name: "",
+    mailid: "",
+    department: "",
+    designation:"",
+    project_manager_name: "",
   });
+
+  useEffect(() => {
+    if (loginDetail) {
+      setFormData({
+        name: loginDetail?.data?.user?.name || "",
+        mailid: loginDetail?.data?.user?.mailid || "",
+        department: loginDetail?.data?.user?.department || "",
+        designation: loginDetail?.data?.user?.designation || "",
+        project_manager_name: loginDetail?.data?.user?.project_manager_name || "",
+      });
+    }
+  }, [loginDetail]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -27,9 +42,12 @@ const EditProfile = ({ user }) => {
   };
 
   const handleSubmit = () => {
-    console.log("Submitting updated profile:", formData);
-    // You can call your update profile API here
+    console.log("Updated Profile Data", formData);
   };
+
+  if (!loginDetail) {
+    return <Typography>Loading profile...</Typography>;
+  }
 
   return (
     <Paper elevation={3} sx={{ p: 4, maxWidth: 600, mx: "auto", mt: 4 }}>
@@ -53,17 +71,10 @@ const EditProfile = ({ user }) => {
             name="mailid"
             value={formData.mailid}
             onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="Username"
-            name="username"
-            value={formData.username}
             disabled
           />
         </Grid>
+
         <Grid item xs={12}>
           <TextField
             fullWidth
@@ -76,32 +87,24 @@ const EditProfile = ({ user }) => {
         <Grid item xs={12}>
           <TextField
             fullWidth
+            label="Designation"
+            name="username"
+            value={formData.designation}
+
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
             label="Project Manager"
             name="project_manager_name"
             value={formData.project_manager_name}
             onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="Ref ID"
-            name="ref_id"
-            value={formData.ref_id}
             disabled
           />
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="New Password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Leave blank if not changing"
-          />
-        </Grid>
+
+
         <Grid item xs={12}>
           <Button
             fullWidth

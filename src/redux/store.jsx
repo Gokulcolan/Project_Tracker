@@ -4,6 +4,7 @@ import { userReducer } from "./slice/userSlice";
 import { adminReducer } from "./slice/adminSlice";
 import { managerReducer } from "./slice/managerSlice";
 
+
 const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,

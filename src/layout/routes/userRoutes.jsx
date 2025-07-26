@@ -40,6 +40,7 @@ const UserRoutes = [
         path: "projectApproval",
         element: <ProjectApproval />,
       },
+      
     ],
   }
 ]

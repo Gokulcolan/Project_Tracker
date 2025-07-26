@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
@@ -15,6 +15,9 @@ import { Layout } from "./layout";
 import { logout } from "../../../redux/slice/authSlice";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import NotificationCard from "../../../componenets/common/cards/notificationCard";
+import socket from "../../../socket";
+import axios from "axios";
+import { ADMIN_BASE_URL } from "../../../redux/api/configURL";
 
 const drawerWidth = 280;
 
@@ -38,6 +41,9 @@ export default function RootLayout() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [drawerOpen, setDrawerOpen] = useState(true); // Sidebar open state
     const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
+
+    const [notifications, setNotifications] = useState([]);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -48,6 +54,7 @@ export default function RootLayout() {
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
+
     const handleLogOut = () => {
         handleSesssionStorage("remove", "ur");
         localStorage.clear();
@@ -63,7 +70,6 @@ export default function RootLayout() {
         setDrawerOpen(!drawerOpen); // Toggle the sidebar open state
     };
 
-
     const handleNotificationClick = (event) => {
         setNotificationAnchorEl(event.currentTarget);
     };
@@ -71,6 +77,52 @@ export default function RootLayout() {
     const handleNotificationClose = () => {
         setNotificationAnchorEl(null);
     };
+
+    useEffect(() => {
+        const userData = handleSesssionStorage("get", "user");
+        let user = null;
+
+        try {
+            user = userData ? JSON.parse(userData) : null;
+        } catch (error) {
+            console.error("❌ Failed to parse user data from sessionStorage:", error);
+        }
+
+        // 👇 Socket join should happen as early as possible
+        if (user?.id) {
+            socket.emit("join", { user_id: user.id });
+        }
+
+        const fetchNotifications = async () => {
+            try {
+                const token = handleSesssionStorage("get", "token");
+                const res = await axios.get(`${ADMIN_BASE_URL}/api/notifications`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (res.data.success) {
+                    setNotifications(res.data.data);
+                }
+            } catch (err) {
+                console.error("Failed to fetch notifications:", err);
+            }
+        };
+
+        fetchNotifications();
+
+        // ✅ Real-time notification listener
+        socket.on("notification", (data) => {
+            setNotifications((prev) => [data, ...prev]);
+        });
+
+        // Cleanup
+        return () => {
+            socket.off("notification");
+        };
+    }, []);
+
 
     return (
         <Box sx={{ display: "flex", position: "relative" }}>
@@ -124,7 +176,7 @@ export default function RootLayout() {
                             onClick={handleNotificationClick}
                             sx={{ color: "#00796b", mr: 2 }}
                         >
-                            <Badge badgeContent={3} color="error">
+                            <Badge badgeContent={notifications.length} color="error">
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
@@ -147,23 +199,22 @@ export default function RootLayout() {
                                 },
                             }}
                         >
-                            {/* Sample Notification Items */}
-                            <NotificationCard
-                                title="New Task Assigned"
-                                message="You've been added to the Q3 milestone."
-                                timestamp="2 mins ago"
-                            />
-                            <NotificationCard
-                                title="Project Approved"
-                                message="Manager approved the project."
-                                timestamp="10 mins ago"
-                            />
-                            <NotificationCard
-                                title="Reminder"
-                                message="Stand-up meeting at 4 PM"
-                                timestamp="1 hour ago"
-                            />
+                            {notifications.length === 0 ? (
+                                <Typography textAlign="center" p={2}>
+                                    No new notifications
+                                </Typography>
+                            ) : (
+                                notifications.map((notif, index) => (
+                                    <NotificationCard
+                                        key={index}
+                                        title={notif.title}
+                                        message={notif.message}
+                                        timestamp={notif.timestamp || "Just now"}
+                                    />
+                                ))
+                            )}
                         </Menu>
+
 
                         <Avatar
                             sx={{ cursor: "pointer", backgroundColor: "#00796b" }}
@@ -172,6 +223,8 @@ export default function RootLayout() {
                             <AccountCircleIcon sx={{ fontSize: "40px" }} />
                         </Avatar>
                     </Box>
+
+
 
                     <Menu
                         anchorEl={anchorEl}
@@ -224,3 +277,4 @@ export default function RootLayout() {
         </Box>
     )
 }
+

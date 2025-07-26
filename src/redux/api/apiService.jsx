@@ -77,7 +77,7 @@ export const Apiservice = async (method, url, body, params) => {
         params: params || null,
       });
 
-      console.log("✅ Success Response:", response);
+      // console.log("✅ Success Response:", response);
 
       const message = response.data?.message || "";
       if (message) {

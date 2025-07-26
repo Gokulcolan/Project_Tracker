@@ -214,6 +214,7 @@ export default function ProjectDashboard() {
                         teamMember: userViewSingleProjectDetail?.data?.teammembers
                             ?.map((member) => member.name)
                             .join(", "),
+                        projectRefId: userViewSingleProjectDetail?.data?.project_ref_id
                     }}
                 />
             </CustomTabPanel>
