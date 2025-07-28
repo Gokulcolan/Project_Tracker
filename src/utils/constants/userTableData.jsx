@@ -59,7 +59,7 @@ export const userProjectMilestoneSettingTableHead = [
 
 export const userViewMilestoneProjectTableHead = [
     {
-        label: "Milestone", id: "name"
+        label: "Milestone", id: "milestone_name"
     },
     {
         label: "Start Date", id: "startdate"

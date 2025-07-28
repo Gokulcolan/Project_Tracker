@@ -126,9 +126,8 @@ const ProjectApproval = ({ project }) => {
                         Ask For Manager Approval
                     </Button>
                 </Box>
-
-
             </Card>
+            <br />
             <Box
                 sx={{
                     maxHeight: 400,

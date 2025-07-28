@@ -20,10 +20,9 @@ const ManagerAddNewEmployeeModal = ({ openModal, setOpenModal }) => {
 
     const dispatch = useDispatch();
 
-    const departments = ["Alternator", "Starter", "Wiper", "Process Development - MFG", "Process Development - Assembly and AI"];
-    // const roles = ["manager", "user"];
-
-    const teams = ["PED"]
+    const teams = ["Alternator", "Starter", "Wiper", "Process Development - MFG", "Process Development - Assembly and AI"];
+    
+    const departments = ["PED"]
 
     const formik = useFormik({
         initialValues: {
@@ -84,7 +83,6 @@ const ManagerAddNewEmployeeModal = ({ openModal, setOpenModal }) => {
                         maxHeight: "90vh",
                     }}
                 >
-
                     <CardHeader
                         title={
                             <Typography variant="h6" fontWeight={700} color="white">
@@ -93,7 +91,6 @@ const ManagerAddNewEmployeeModal = ({ openModal, setOpenModal }) => {
                         }
                         sx={{ textAlign: { xs: "center", sm: "left", backgroundColor: "#00796b", color: "white", padding: "13px 16px" } }}
                     />
-
                     <Box
                         component="form"
                         onSubmit={formik.handleSubmit}
@@ -146,9 +143,6 @@ const ManagerAddNewEmployeeModal = ({ openModal, setOpenModal }) => {
                             type="text"
                             required
                         />
-
-
-
                         <Button type="submit" fullWidth sx={{ mt: 2, backgroundColor: "#00796b", color: "white" }}>
                             Submit
                         </Button>
