@@ -1,5 +1,5 @@
 import { Apiservice } from "../api/apiService";
-import { getManagerTeamMemberListReducer, getManagerTeamMemberProjectListReducer, getManagerTeamMemberReducer, getMilestonesByProjectForManagerReducer, getMilestonesChartByProjectForManagerReducer, getTaskListByProjectForManagerReducer, managerAddMilestoneReducer, managerAddProjectReducer, managerAddUserReducer, managerProjectListReducer, managerViewSingleProjectReducer, updateMilestonesByProjectForManagerReducer } from "../slice/managerSlice";
+import { finalProjectCommentsReducer, getManagerTeamMemberListReducer, getManagerTeamMemberProjectListReducer, getManagerTeamMemberReducer, getMilestonesByProjectForManagerReducer, getMilestonesChartByProjectForManagerReducer, getTaskListByProjectForManagerReducer, managerAddMilestoneReducer, managerAddProjectReducer, managerAddUserReducer, managerProjectListReducer, managerViewSingleProjectReducer, projectStatusUpdateReducer, updateMilestonesByProjectForManagerReducer } from "../slice/managerSlice";
 
 export function apiHelper(apiReducer, method, apiURL, data = "") {
     return async (dispatch) => {
@@ -30,16 +30,16 @@ export function managerViewSingleProjectApi(payload) {
     return apiHelper(managerViewSingleProjectReducer, "GET", `/api/manager/project/${payload}`);
 }
 
-export function managerAddMilestoneApi(payload,projectRefId) {
-    return apiHelper(managerAddMilestoneReducer, "POST", `/api/user/milestone/create/${projectRefId}`,payload);
+export function managerAddMilestoneApi(payload, projectRefId) {
+    return apiHelper(managerAddMilestoneReducer, "POST", `/api/user/milestone/create/${projectRefId}`, payload);
 }
 
 export function getMilestoneByProjectForManagerApi(projectRefId) {
     return apiHelper(getMilestonesByProjectForManagerReducer, "GET", `/api/user/milestone/project/${projectRefId}`);
 }
 
-export function updateMilestonesByProjectFormanagerApi(projectRefId,payload) {
-    return apiHelper(updateMilestonesByProjectForManagerReducer, "PUT", `/api/manager/project/${projectRefId}/milestones/edit`,payload);
+export function updateMilestonesByProjectFormanagerApi(projectRefId, payload) {
+    return apiHelper(updateMilestonesByProjectForManagerReducer, "PUT", `/api/manager/project/${projectRefId}/milestones/edit`, payload);
 }
 
 export function MilestonesChartByProjectForManagerApi(projectRefId) {
@@ -59,4 +59,12 @@ export function getManagerTeamMemberProjectListApi(projectRefId) {
 
 export function managerAddUserApi(payload) {
     return apiHelper(managerAddUserReducer, "POST", "/api/manager/add-user", payload);
+}
+
+export function projectStatusUpdateManagerApi(payload, projectRefId) {
+    return apiHelper(projectStatusUpdateReducer, "PUT", `/api/manager/project/${projectRefId}/update-status`, payload);
+}
+
+export function finalProjectCommentsApi(projectRefId) {
+    return apiHelper(finalProjectCommentsReducer, "GET", `/api/project/${projectRefId}/status-history`);
 }

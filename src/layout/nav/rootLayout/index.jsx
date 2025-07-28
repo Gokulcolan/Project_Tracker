@@ -9,15 +9,16 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu"; // Import the Menu Icon
 import { Outlet, useNavigate } from "react-router-dom";
 import { handleSesssionStorage } from "../../../utils/helperFunction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Layout } from "./layout";
-import { logout } from "../../../redux/slice/authSlice";
+import { authSelector, logout } from "../../../redux/slice/authSlice";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import NotificationCard from "../../../componenets/common/cards/notificationCard";
 import socket from "../../../socket";
 import axios from "axios";
 import { ADMIN_BASE_URL } from "../../../redux/api/configURL";
+import { NotificationApi, NotificationReadUnreadApi } from "../../../redux/action/authAction";
 
 const drawerWidth = 280;
 
@@ -46,6 +47,8 @@ export default function RootLayout() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { notificationDetail } = useSelector(authSelector)
+    console.log(notificationDetail, "notificationDetail")
 
     const handleProfileClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -93,36 +96,42 @@ export default function RootLayout() {
             socket.emit("join", { user_id: user.id });
         }
 
-        const fetchNotifications = async () => {
-            try {
-                const token = handleSesssionStorage("get", "token");
-                const res = await axios.get(`${ADMIN_BASE_URL}/api/notifications`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-
-                if (res.data.success) {
-                    setNotifications(res.data.data);
-                }
-            } catch (err) {
-                console.error("Failed to fetch notifications:", err);
-            }
-        };
-
-        fetchNotifications();
+        // Fetch notifications via Redux API
+        dispatch(NotificationApi());
 
         // ✅ Real-time notification listener
         socket.on("notification", (data) => {
             setNotifications((prev) => [data, ...prev]);
         });
 
-        // Cleanup
+        // Cleanup on unmount
         return () => {
             socket.off("notification");
         };
-    }, []);
+    }, [dispatch]);
 
+    // ✅ Update notifications when notificationDetail changes
+    useEffect(() => {
+        if (notificationDetail?.success) {
+            setNotifications(
+                notificationDetail.data.map((n) => ({
+                    ...n,
+                    is_read: n.is_read || false,
+                }))
+            );
+        }
+    }, [notificationDetail]);
+
+    const handleMarkAsRead = async (notifId) => {
+        try {
+            dispatch(NotificationReadUnreadApi(notifId))
+            setNotifications(prev =>
+                prev.map(n => n.id === notifId ? { ...n, is_read: true } : n)
+            );
+        } catch (err) {
+            console.error("Failed to mark notification as read:", err);
+        }
+    };
 
     return (
         <Box sx={{ display: "flex", position: "relative" }}>
@@ -132,10 +141,8 @@ export default function RootLayout() {
                 sx={{
                     // height: "74px",
                     backgroundColor: "#f8f9fa",
-
                     // boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)"
                     boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.1)"
-
                 }}
             >
                 <Toolbar>
@@ -176,7 +183,10 @@ export default function RootLayout() {
                             onClick={handleNotificationClick}
                             sx={{ color: "#00796b", mr: 2 }}
                         >
-                            <Badge badgeContent={notifications.length} color="error">
+                            <Badge
+                                badgeContent={notifications.filter(n => !n.is_read).length}
+                                color="error"
+                            >
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
@@ -195,26 +205,34 @@ export default function RootLayout() {
                                     mt: 1.5,
                                     borderRadius: 2,
                                     p: 1,
-                                    boxShadow: "0px 4px 12px rgba(0,0,0,0.15)",
+                                    boxShadow: `
+                                                    0px 2px 4px rgba(0, 0, 0, 0.3),
+                                                    0px 4px 12px rgba(0, 0, 0, 0.25),
+                                                    0px 8px 24px rgba(0, 0, 0, 0.15)
+                                                    `,
+
                                 },
                             }}
                         >
                             {notifications.length === 0 ? (
-                                <Typography textAlign="center" p={2}>
-                                    No new notifications
-                                </Typography>
+                                <Typography textAlign="center" p={2}>No new notifications</Typography>
                             ) : (
-                                notifications.map((notif, index) => (
-                                    <NotificationCard
-                                        key={index}
-                                        title={notif.title}
-                                        message={notif.message}
-                                        timestamp={notif.timestamp || "Just now"}
-                                    />
-                                ))
+                                <>
+                                    {notifications
+                                        .sort((a, b) => Number(a.is_read) - Number(b.is_read)) // unread first
+                                        .map((notif) => (
+                                            <NotificationCard
+                                                key={notif.id}
+                                                title={notif.title}
+                                                message={notif.message}
+                                                timestamp={notif.timestamp || "Just now"}
+                                                isRead={notif.is_read}
+                                                onClick={() => handleMarkAsRead(notif.id)}
+                                            />
+                                        ))}
+                                </>
                             )}
                         </Menu>
-
 
                         <Avatar
                             sx={{ cursor: "pointer", backgroundColor: "#00796b" }}
@@ -223,8 +241,6 @@ export default function RootLayout() {
                             <AccountCircleIcon sx={{ fontSize: "40px" }} />
                         </Avatar>
                     </Box>
-
-
 
                     <Menu
                         anchorEl={anchorEl}

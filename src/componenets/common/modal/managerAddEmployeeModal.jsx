@@ -20,14 +20,17 @@ const ManagerAddNewEmployeeModal = ({ openModal, setOpenModal }) => {
 
     const dispatch = useDispatch();
 
-    const departments = ["Alternator", "Starter", "Wiper", "Process Development - MFG","Process Development - Assembly and AI"];
+    const departments = ["Alternator", "Starter", "Wiper", "Process Development - MFG", "Process Development - Assembly and AI"];
     // const roles = ["manager", "user"];
+
+    const teams = ["PED"]
 
     const formik = useFormik({
         initialValues: {
             ccNo: "",
             name: "",
             email: "",
+            team: "",
             department: "",
             designation: "",
             // role: "",
@@ -38,6 +41,7 @@ const ManagerAddNewEmployeeModal = ({ openModal, setOpenModal }) => {
             email: Yup.string()
                 .email("Invalid email format")
                 .required("Email is required"),
+            team: Yup.string().required("Team is required"),
             department: Yup.string().required("Department is required"),
             designation: Yup.string().required("Designation is required"),
             // role: Yup.string().required("Role is required"),
@@ -47,6 +51,7 @@ const ManagerAddNewEmployeeModal = ({ openModal, setOpenModal }) => {
                 cc_no: values.ccNo,
                 name: values.name,
                 mailid: values.email,
+                team: values.team,
                 department: values.department,
                 designation: values.designation,
                 // role: values.role,
@@ -123,13 +128,26 @@ const ManagerAddNewEmployeeModal = ({ openModal, setOpenModal }) => {
                         </FormikTextField>
                         <FormikTextField
                             formik={formik}
+                            name="team"
+                            label="Team"
+                            select
+                            required
+                        >
+                            {teams.map((team) => (
+                                <MenuItem key={team} value={team}>
+                                    {team}
+                                </MenuItem>
+                            ))}
+                        </FormikTextField>
+                        <FormikTextField
+                            formik={formik}
                             name="designation"
                             label="Designation"
                             type="text"
                             required
                         />
 
-                      
+
 
                         <Button type="submit" fullWidth sx={{ mt: 2, backgroundColor: "#00796b", color: "white" }}>
                             Submit

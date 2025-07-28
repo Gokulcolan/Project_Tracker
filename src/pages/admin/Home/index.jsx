@@ -12,8 +12,8 @@ import FormikTextField from "../../../componenets/common/Fields/formikTextField"
 import { useDispatch } from "react-redux";
 import { AdminAddUserApi } from "../../../redux/action/adminAction";
 
-const departments = ["Alternator", "Starter", "Wiper", "Process Development - MFG", "Process Development - Assembly and AI"];
-
+const teams = ["Alternator", "Starter", "Wiper", "Process Development - MFG", "Process Development - Assembly and AI"];
+const departments = ["PED"]
 const roles = ["manager", "user"];
 
 const AdminHome = () => {
@@ -24,6 +24,7 @@ const AdminHome = () => {
       ccNo: "",
       name: "",
       email: "",
+      team: "",
       department: "",
       designation: "",
       role: "",
@@ -35,6 +36,7 @@ const AdminHome = () => {
         .email("Invalid email format")
         .required("Email is required"),
       department: Yup.string().required("Department is required"),
+      team: Yup.string().required("team is required"),
       designation: Yup.string().required("Designation is required"),
 
       role: Yup.string().required("Role is required"),
@@ -46,6 +48,7 @@ const AdminHome = () => {
         name: values.name,
         mailid: values.email,
         department: values.department,
+        team: values.team,
         designation: values.designation,
         role: values.role,
 
@@ -89,6 +92,20 @@ const AdminHome = () => {
             {departments.map((dept) => (
               <MenuItem key={dept} value={dept}>
                 {dept}
+              </MenuItem>
+            ))}
+          </FormikTextField>
+
+          <FormikTextField
+            formik={formik}
+            name="team"
+            label="Team"
+            select
+            required
+          >
+            {teams.map((team) => (
+              <MenuItem key={team} value={team}>
+                {team}
               </MenuItem>
             ))}
           </FormikTextField>

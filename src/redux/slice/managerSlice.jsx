@@ -26,7 +26,11 @@ const managerSlice = createSlice({
         getManagerTeamMemberProjectListDetail: [],
         getManagerTeamMemberProjectListIsLoading: false,
         managerAddUserDetail: [],
-        managerAddUserIsLoading: false
+        managerAddUserIsLoading: false,
+        projectStatusUpdateDetail: [],
+        projectStatusUpdateIsLoading: false,
+        finalProjectCommentsDetail: [],
+        finalProjectCommentsIsLoading: false
     },
     reducers: {
         managerAddProjectReducer: (state, { payload }) => {
@@ -96,6 +100,17 @@ const managerSlice = createSlice({
             state.managerAddUserDetail = apiData;
             state.managerAddUserIsLoading = isLoading;
         },
+
+        projectStatusUpdateReducer: (state, { payload }) => {
+            const { apiData, isLoading } = payload;
+            state.projectStatusUpdateDetail = apiData;
+            state.projectStatusUpdateIsLoading = isLoading;
+        },
+        finalProjectCommentsReducer: (state, { payload }) => {
+            const { apiData, isLoading } = payload;
+            state.finalProjectCommentsDetail = apiData;
+            state.finalProjectCommentsIsLoading = isLoading;
+        },
     },
 })
 
@@ -112,7 +127,9 @@ export const {
     getTaskListByProjectForManagerReducer,
     getManagerTeamMemberListReducer,
     managerAddUserReducer,
-    getManagerTeamMemberProjectListReducer
+    getManagerTeamMemberProjectListReducer,
+    projectStatusUpdateReducer,
+    finalProjectCommentsReducer
 
 } = managerSlice.actions;
 

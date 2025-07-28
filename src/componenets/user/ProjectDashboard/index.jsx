@@ -14,7 +14,6 @@ import { userViewMilestoneProjectTableHead } from "../../../utils/constants/user
 import UserAddMilestoneModal from "../../common/modal/userAddMileStoneModal";
 import UserUpdateMilestoneModal from "../../common/modal/userUpdateMilestoneModal";
 import AddNewTask from '../AddNewTask';
-import { Button } from '@mui/material';
 import ProjectApproval from '../ProjectApproval';
 
 function CustomTabPanel(props) {
@@ -74,16 +73,15 @@ const tabStyles = {
 
 export default function ProjectDashboard() {
 
-
     const { state } = useLocation();
     const dispatch = useDispatch()
     const [value, setValue] = React.useState(0);
     const [open, setOpen] = useState(false);
     const [openUpdate, setOpenUpdate] = useState(false);
-
     const [selectedMilestone, setSelectedMilestone] = useState(null);
     const projectRefId = state?.projectRefId;
     const { userViewSingleProjectDetail, getMilestonesByProjectForUserDetail } = useSelector(userSelector);
+    console.log(userViewSingleProjectDetail, "userViewSingleProjectDetail")
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -214,7 +212,8 @@ export default function ProjectDashboard() {
                         teamMember: userViewSingleProjectDetail?.data?.teammembers
                             ?.map((member) => member.name)
                             .join(", "),
-                        projectRefId: userViewSingleProjectDetail?.data?.project_ref_id
+                        projectRefId: userViewSingleProjectDetail?.data?.project_ref_id,
+                        projectLead: userViewSingleProjectDetail?.data?.project_leader?.name
                     }}
                 />
             </CustomTabPanel>

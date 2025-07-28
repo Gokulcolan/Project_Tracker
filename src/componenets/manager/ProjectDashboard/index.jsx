@@ -86,6 +86,7 @@ export default function ProjectDashboard() {
     const [selectedMilestone, setSelectedMilestone] = useState(null);
     const projectRefId = state?.projectRefId;
     const { managerViewSingleProjectDetail, getMilestonesByProjectForManagerDetail } = useSelector(managerSelector);
+    console.log(managerViewSingleProjectDetail, "managerViewSingleProjectDetail")
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -234,6 +235,7 @@ export default function ProjectDashboard() {
                         teamMember: managerViewSingleProjectDetail?.data?.teammembers
                             ?.map((member) => member.name)
                             .join(", "),
+                        projectRefId: managerViewSingleProjectDetail?.data?.project_ref_id
                     }}
 
                 />

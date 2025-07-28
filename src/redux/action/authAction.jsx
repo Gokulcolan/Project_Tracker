@@ -1,5 +1,5 @@
 import { Apiservice } from "../api/apiService";
-import { loginReducer } from "../slice/authSlice";
+import { loginReducer, notificationReadUnreadReducer, notificationReducer } from "../slice/authSlice";
 
 export function apiHelper(apiReducer, method, apiURL, data = "") {
   return async (dispatch) => {
@@ -17,4 +17,12 @@ export function apiHelper(apiReducer, method, apiURL, data = "") {
 
 export function LoginApi(payload) {
   return apiHelper(loginReducer, "POST", "/api/auth/user-login", payload);
+}
+
+export function NotificationApi(payload) {
+  return apiHelper(notificationReducer, "GET", "/api/notifications", payload);
+}
+
+export function NotificationReadUnreadApi(notifId) {
+  return apiHelper(notificationReadUnreadReducer, "PUT", `/api/notifications/${notifId}/read`);
 }
