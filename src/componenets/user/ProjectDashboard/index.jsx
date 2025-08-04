@@ -81,7 +81,6 @@ export default function ProjectDashboard() {
     const [selectedMilestone, setSelectedMilestone] = useState(null);
     const projectRefId = state?.projectRefId;
     const { userViewSingleProjectDetail, getMilestonesByProjectForUserDetail } = useSelector(userSelector);
-    console.log(userViewSingleProjectDetail, "userViewSingleProjectDetail")
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -95,14 +94,6 @@ export default function ProjectDashboard() {
         }
     }, [dispatch, projectRefId]);
 
-    // const handleAddMilestone = () => {
-    //     setSelectedMilestone({
-    //         projectRefId: projectRefId,
-    //         // milestoneRefId: row.milestone_ref_id,
-    //     });
-    //     setOpen(true);
-    // }
-
     const handleActionClick = (action, row) => {
         switch (action) {
 
@@ -114,9 +105,7 @@ export default function ProjectDashboard() {
                     milestoneData: row,
                 });
                 setOpen(true);
-                // } else {
-                //     alert("Set Milestone is Already Completed now you are not able to view.");
-                // }
+              
                 break;
             case "edit":
                 setSelectedMilestone({
@@ -126,12 +115,7 @@ export default function ProjectDashboard() {
                 });
                 setOpenUpdate(true);
                 break;
-            // case "delete":
-            //     if (window.confirm(`Are you sure you want to delete "${row.project_name}"?`)) {
-            //         console.log("DELETE", row);
-            //         // dispatch(deleteProjectApi(row.id))
-            //     }
-            //     break;
+        
             default:
                 break;
         }

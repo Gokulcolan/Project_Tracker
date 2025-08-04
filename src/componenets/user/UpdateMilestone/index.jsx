@@ -21,13 +21,8 @@ const ViewMilestone = () => {
     }, [])
 
     const handleActionClick = (action, row) => {
-        console.log(row, "row")
         switch (action) {
-            // case "view":
-            //     navigate("/userDashboard/addMilestones", {
-            //         state: { projectRefId: row.project_ref_id },
-            //     });
-            //     break;
+         
             case "edit":
                 setSelectedMilestone({
                     projectRefId: projectRefId,
@@ -35,12 +30,7 @@ const ViewMilestone = () => {
                 });
                 setOpen(true);
                 break;
-            // case "delete":
-            //     if (window.confirm(`Are you sure you want to delete "${row.project_name}"?`)) {
-            //         console.log("DELETE", row);
-            //         // dispatch(deleteProjectApi(row.id))
-            //     }
-            //     break;
+     
             default:
                 break;
         }

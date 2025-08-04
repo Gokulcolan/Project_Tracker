@@ -5,6 +5,10 @@ const authSlice = createSlice({
     initialState: {
         loginDetail: [],
         loginIsLoading: false,
+        forgotPassDetail: [],
+        forgotPassIsLoading: false,
+        EditProfileDetail: [],
+        EditProfileIsLoading: false,
         notificationDetail: [],
         notificationIsLoading: false,
         notificationReadUnreadDetail: [],
@@ -15,6 +19,16 @@ const authSlice = createSlice({
             const { apiData, isLoading } = payload;
             state.loginDetail = apiData;
             state.loginIsLoading = isLoading;
+        },
+        forgotPassReducer: (state, { payload }) => {
+            const { apiData, isLoading } = payload;
+            state.forgotPassDetail = apiData;
+            state.forgotPassIsLoading = isLoading;
+        },
+        EditProfileReducer: (state, { payload }) => {
+            const { apiData, isLoading } = payload;
+            state.EditProfileDetail = apiData;
+            state.EditProfileIsLoading = isLoading;
         },
         notificationReducer: (state, { payload }) => {
             const { apiData, isLoading } = payload;
@@ -32,7 +46,7 @@ const authSlice = createSlice({
     },
 })
 
-export const { loginReducer, logout, notificationReducer, notificationReadUnreadReducer } = authSlice.actions;
+export const { loginReducer, forgotPassReducer,EditProfileReducer, logout, notificationReducer, notificationReadUnreadReducer } = authSlice.actions;
 
 export const authSelector = (state) => state.auth;
 

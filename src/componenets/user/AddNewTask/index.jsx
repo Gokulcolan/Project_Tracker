@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import UserAddNewTaskModal from '../../common/modal/userAddNewTaskModal'
 import CommonTable from '../../common/Table/commonTable';
 import { userTaskListTableHead } from '../../../utils/constants/userTableData';
@@ -9,8 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userSelector } from '../../../redux/slice/userSlice';
 
 const AddNewTask = () => {
+
     const { state } = useLocation();
     const dispatch = useDispatch()
+    
     const projectRefId = state?.projectRefId;
     const [open, setOpen] = useState(false);
     const { getTaskListByProjectForUserDetail } = useSelector(userSelector)

@@ -2,121 +2,143 @@ import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
-  Grid,
   Paper,
   TextField,
   Typography,
+  Stack,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authSelector } from "../../../redux/slice/authSlice";
+import { EditProfileApi } from "../../../redux/action/authAction";
 
 const EditProfile = () => {
   const { loginDetail } = useSelector(authSelector);
-  console.log(loginDetail,"loginDetail")
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     name: "",
     mailid: "",
     department: "",
-    designation:"",
+    designation: "",
     project_manager_name: "",
   });
 
+  // Load profile details
   useEffect(() => {
-    if (loginDetail) {
+    const user = loginDetail?.data?.user;
+    if (user) {
       setFormData({
-        name: loginDetail?.data?.user?.name || "",
-        mailid: loginDetail?.data?.user?.mailid || "",
-        department: loginDetail?.data?.user?.department || "",
-        designation: loginDetail?.data?.user?.designation || "",
-        project_manager_name: loginDetail?.data?.user?.project_manager_name || "",
+        name: user.name || "",
+        mailid: user.mailid || "",
+        department: user.department || "",
+        designation: user.designation || "",
+        project_manager_name: user.project_manager_name || "",
       });
     }
   }, [loginDetail]);
 
+  // Input handler
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
   };
 
+  // Submit handler
   const handleSubmit = () => {
-    console.log("Updated Profile Data", formData);
+    const payload = {
+      name: formData.name.trim(),
+      designation: formData.designation.trim(),
+    };
+    dispatch(EditProfileApi(payload));
   };
 
   if (!loginDetail) {
-    return <Typography>Loading profile...</Typography>;
+    return (
+      <Typography textAlign="center" mt={4}>
+        Loading profile...
+      </Typography>
+    );
   }
 
   return (
-    <Paper elevation={3} sx={{ p: 4, maxWidth: 600, mx: "auto", mt: 4 }}>
-      <Typography variant="h5" fontWeight={600} mb={3}>
-        Edit Profile
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
+    <Box
+      className="bgLogin"
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        px: 2,
+      }}
+    >
+      <Paper
+        elevation={4}
+        sx={{
+          p: 4,
+          width: "100%",
+          maxWidth: 400,
+          borderRadius: 3,
+        }}
+      >
+        <Typography variant="h5" fontWeight={600} mb={3} textAlign="center">
+          Edit Profile
+        </Typography>
+
+        <Stack spacing={2}>
           <TextField
-            fullWidth
             label="Full Name"
             name="name"
-            value={formData.name}
+            value={formData.name || ""}
             onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
             fullWidth
+          />
+          <TextField
             label="Email"
             name="mailid"
-            value={formData.mailid}
-            onChange={handleChange}
+            value={formData.mailid || ""}
+            fullWidth
             disabled
           />
-        </Grid>
-
-        <Grid item xs={12}>
           <TextField
-            fullWidth
             label="Department"
             name="department"
-            value={formData.department}
+            value={formData.department || ""}
+            fullWidth
             disabled
           />
-        </Grid>
-        <Grid item xs={12}>
           <TextField
-            fullWidth
             label="Designation"
-            name="username"
-            value={formData.designation}
-
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
+            name="designation"
+            value={formData.designation || ""}
+            onChange={handleChange}
             fullWidth
+          />
+          <TextField
             label="Project Manager"
             name="project_manager_name"
-            value={formData.project_manager_name}
-            onChange={handleChange}
+            value={formData.project_manager_name || ""}
+            fullWidth
             disabled
           />
-        </Grid>
 
-
-        <Grid item xs={12}>
           <Button
-            fullWidth
             variant="contained"
-            sx={{ backgroundColor: "#00796b", color: "white" }}
+            fullWidth
+            sx={{
+              backgroundColor: "#00796b",
+              "&:hover": { backgroundColor: "#005f56" },
+              mt: 1,
+            }}
             onClick={handleSubmit}
           >
             Save Changes
           </Button>
-        </Grid>
-      </Grid>
-    </Paper>
+        </Stack>
+      </Paper>
+    </Box>
   );
 };
 

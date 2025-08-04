@@ -14,7 +14,6 @@ const ProjectApproval = ({ project }) => {
     const [comment, setComment] = useState("");
     const projectRefId = project.projectRefId
     const { finalProjectCommentsDetail } = useSelector(managerSelector)
-    console.log(finalProjectCommentsDetail, "finalProjectCommentsDetail")
 
     const handleApproval = () => {
         const payload = { projectId: projectRefId, comment, status };
@@ -43,7 +42,6 @@ const ProjectApproval = ({ project }) => {
             <Card
                 elevation={4}
                 sx={{
-                    // p: 3,
                     borderRadius: 4,
                     display: "flex"
                 }}
@@ -67,6 +65,12 @@ const ProjectApproval = ({ project }) => {
                         <InfoRow icon={<PeopleIcon color="primary" />} label="Project Manager" value={project.projectManager} />
                         <InfoRow icon={<PeopleIcon color="primary" />} label="Project Sponsor" value={project.projectSponsor} />
                     </CardContent>
+                    <Box sx={{ mb: 2 }}>
+                        <Chip
+                            label={`Project Status - ${project.status}` || "N/A"}
+                            sx={{ fontWeight: 600, fontSize: "0.95rem", px: 2, borderRadius: "10px", }}
+                        />
+                    </Box>
                 </Box>
                 <Box
                     sx={{
@@ -87,7 +91,6 @@ const ProjectApproval = ({ project }) => {
                             onChange={(e) => setStatus(e.target.value)}
                         >
                             <MenuItem disabled>🟢 Positive</MenuItem>
-                            <MenuItem value="Completed">Completed</MenuItem>
                             <MenuItem value="Approved">Approved</MenuItem>
 
                             <MenuItem disabled>🟡 Neutral</MenuItem>
@@ -97,7 +100,7 @@ const ProjectApproval = ({ project }) => {
                             <MenuItem disabled>🔴 Negative</MenuItem>
                             <MenuItem value="Needs Changes">Needs Changes</MenuItem>
                             <MenuItem value="Dropped">Dropped</MenuItem>
-                            <MenuItem value="Rejected">Rejected</MenuItem>
+                            {/* <MenuItem value="Rejected">Rejected</MenuItem> */}
                         </Select>
                     </FormControl>
 

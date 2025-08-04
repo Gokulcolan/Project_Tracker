@@ -24,42 +24,42 @@ import { getManagerTeamMemberApi, managerAddProjectApi } from "../../../redux/ac
 import { managerSelector, resetManagerAddProjectDetail } from "../../../redux/slice/managerSlice";
 
 
-// const priorities = [
-//     { value: "Alternator ", label: "Alternator " },
-//     { value: "Starter ", label: "Starter " },
-//     { value: "Wiper ", label: "Wiper " },
-//     { value: "Special Motors ", label: "Special Motors " },
-//     { value: "SMCG", label: "SMCG" },
-//     { value: "SBD", label: "SBD" },
-// ];
-
-// const categories = [
-//     { value: "New Process Technology - Sustainable Growth ", label: "New Process Technology - Sustainable Growth " },
-//     { value: "Capacity enhancement (New lines / P&M) - Sustainable Growth ", label: "Capacity enhancement (New lines / P&M) - Sustainable Growth " },
-//     { value: "New lines to win New Business - Sustainable Growth", label: "New lines to win New Business - Sustainable Growth" },
-//     { value: "Model Lines (World Class Manufacturing) - Competitive Advantage ", label: "Model Lines (World Class Manufacturing) - Competitive Advantage " },
-//     { value: "Industry 4.0 - Competitive Advantage ", label: "Industry 4.0 - Competitive Advantage " },
-//     { value: "Cost reduction - Profitability ", label: "Cost reduction - Profitability " },
-//     { value: "Investment reduction - Profitability ", label: "Investment reduction - Profitability " },
-//     { value: "Manpower reduction - Profitability ", label: "Manpower reduction - Profitability " },
-//     { value: "New products Introduction - Customer Satisfaction", label: "New products Introduction - Customer Satisfaction" },
-//     { value: "Process Technology (Q Impr.) - Customer Satisfactio", label: "Process Technology (Q Impr.) - Customer Satisfactio" },
-// ];
-
-
 const priorities = [
-    { value: "Low", label: "Low" },
-    { value: "Medium", label: "Medium" },
-    { value: "High", label: "High" },
-    { value: "Critical", label: "Critical" },
+    { value: "Alternator ", label: "Alternator " },
+    { value: "Starter ", label: "Starter " },
+    { value: "Wiper ", label: "Wiper " },
+    { value: "Special Motors ", label: "Special Motors " },
+    { value: "SMCG", label: "SMCG" },
+    { value: "SBD", label: "SBD" },
 ];
 
 const categories = [
-    { value: "Web App", label: "Web App" },
-    { value: "Mobile App", label: "Mobile App" },
-    { value: "Internal Tool", label: "Internal Tool" },
-    { value: "Research", label: "Research" },
+    { value: "New Process Technology - Sustainable Growth ", label: "New Process Technology - Sustainable Growth " },
+    { value: "Capacity enhancement (New lines / P&M) - Sustainable Growth ", label: "Capacity enhancement (New lines / P&M) - Sustainable Growth " },
+    { value: "New lines to win New Business - Sustainable Growth", label: "New lines to win New Business - Sustainable Growth" },
+    { value: "Model Lines (World Class Manufacturing) - Competitive Advantage ", label: "Model Lines (World Class Manufacturing) - Competitive Advantage " },
+    { value: "Industry 4.0 - Competitive Advantage ", label: "Industry 4.0 - Competitive Advantage " },
+    { value: "Cost reduction - Profitability ", label: "Cost reduction - Profitability " },
+    { value: "Investment reduction - Profitability ", label: "Investment reduction - Profitability " },
+    { value: "Manpower reduction - Profitability ", label: "Manpower reduction - Profitability " },
+    { value: "New products Introduction - Customer Satisfaction", label: "New products Introduction - Customer Satisfaction" },
+    { value: "Process Technology (Q Impr.) - Customer Satisfactio", label: "Process Technology (Q Impr.) - Customer Satisfactio" },
 ];
+
+
+// const priorities = [
+//     { value: "Low", label: "Low" },
+//     { value: "Medium", label: "Medium" },
+//     { value: "High", label: "High" },
+//     { value: "Critical", label: "Critical" },
+// ];
+
+// const categories = [
+//     { value: "Web App", label: "Web App" },
+//     { value: "Mobile App", label: "Mobile App" },
+//     { value: "Internal Tool", label: "Internal Tool" },
+//     { value: "Research", label: "Research" },
+// ];
 
 
 const validationSchema = Yup.object({

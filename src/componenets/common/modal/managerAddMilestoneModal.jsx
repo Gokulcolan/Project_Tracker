@@ -29,7 +29,6 @@ const ManagerAddMilestoneModal = ({ openModal, setOpenModal, projectRefId,milest
     //  handleSesssionStorage("add", "ur", roleNumber);
     const role = Number(handleSesssionStorage("get", "ur"));
 
-    console.log(role, "role")
 
     const [milestones, setMilestones] = useState([
         { name: "", startDate: null, endDate: null, remarks: "" },
@@ -102,7 +101,6 @@ const ManagerAddMilestoneModal = ({ openModal, setOpenModal, projectRefId,milest
             setMilestones([{ name: "", startDate: null, endDate: null, remarks: "" }]);
             setOpenModal(false);
         } catch (error) {
-            console.error("Error saving milestone:", error);
             alert("Failed to save milestone. Please try again.");
         }
     };

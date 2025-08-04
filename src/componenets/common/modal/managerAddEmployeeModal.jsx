@@ -60,7 +60,6 @@ const ManagerAddNewEmployeeModal = ({ openModal, setOpenModal }) => {
                 dispatch(getManagerTeamMemberListApi());
                 setOpenModal(false);
             } catch (error) {
-                console.error("Error saving Team Member:", error);
                 alert("Failed to Add New User. Please try again.");
             }
         },

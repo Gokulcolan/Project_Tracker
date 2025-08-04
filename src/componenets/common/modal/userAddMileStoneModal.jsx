@@ -5,15 +5,12 @@ import {
     Modal,
     Paper,
     TextField,
-    IconButton,
     Typography,
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import DeleteIcon from "@mui/icons-material/Delete";
 import {
     getMilestonesByProjectForUserApi,
     MilestonesChartByProjectForUserApi,
@@ -23,15 +20,14 @@ import {
 
 const UserAddMilestoneModal = ({ openModal, setOpenModal, projectRefId, milestoneRefId, milestoneData }) => {
     const dispatch = useDispatch();
-    //  handleSesssionStorage("add", "ur", roleNumber);
 
     const [milestones, setMilestones] = useState([]);
 
     useEffect(() => {
         if (openModal) {
-            if (milestoneData && milestoneData.name) {
+            if (milestoneData && milestoneData.milestone_name) {
                 setMilestones([{
-                    name: milestoneData?.name || "",
+                    name: milestoneData?.milestone_name || "",
                     startDate: milestoneData.startdate ? new Date(milestoneData.startdate) : null,
                     endDate: milestoneData.enddate ? new Date(milestoneData.enddate) : null,
                     remarks: milestoneData.remarks || "",
@@ -48,18 +44,6 @@ const UserAddMilestoneModal = ({ openModal, setOpenModal, projectRefId, mileston
             prev.map((item, i) => (i === index ? { ...item, [field]: value } : item))
         );
     };
-
-    const addMilestone = () => {
-        setMilestones((prev) => [
-            ...prev,
-            { name: "", startDate: null, endDate: null, remarks: "" },
-        ]);
-    };
-
-    const removeMilestone = (index) => {
-        setMilestones((prev) => prev.filter((_, i) => i !== index));
-    };
-
 
     const formatDate = (date) => {
         if (!date) return null;
@@ -99,7 +83,6 @@ const UserAddMilestoneModal = ({ openModal, setOpenModal, projectRefId, mileston
             setMilestones([{ name: "", startDate: null, endDate: null, remarks: "" }]);
             setOpenModal(false);
         } catch (error) {
-            console.error("Error saving milestone:", error);
             alert("Failed to save milestone. Please try again.");
         }
     };
@@ -128,7 +111,7 @@ const UserAddMilestoneModal = ({ openModal, setOpenModal, projectRefId, mileston
                 >
                     {/* Header */}
                     <Typography variant="h6" fontWeight="bold" textAlign="center" mb={2}>
-                        Add Milestone
+                        Set Milestone Target Dates
                     </Typography>
 
                     {/* Milestone rows */}
@@ -202,7 +185,7 @@ const UserAddMilestoneModal = ({ openModal, setOpenModal, projectRefId, mileston
                                 </Grid>
 
                                 {/* Action Buttons */}
-                                <Grid
+                                {/* <Grid
                                     item
                                     xs={12}
                                     sm={1}
@@ -224,7 +207,7 @@ const UserAddMilestoneModal = ({ openModal, setOpenModal, projectRefId, mileston
                                             <DeleteIcon fontSize="small" />
                                         </IconButton>
                                     )}
-                                </Grid>
+                                </Grid> */}
                             </Grid>
                         </Paper>
                     ))}

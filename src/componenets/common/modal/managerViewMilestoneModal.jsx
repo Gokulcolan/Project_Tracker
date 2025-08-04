@@ -20,7 +20,6 @@ const ManagerViewMilestoneModal = ({
   
     milestoneData,
 }) => {
-    console.log(milestoneData, "milestoneData")
     const dispatch = useDispatch();
 
     const [form, setForm] = useState({
@@ -54,44 +53,10 @@ const ManagerViewMilestoneModal = ({
     }, [milestoneData]);
 
     const handleChange = (field, value) => {
-        console.log(`Updating ${field} to`, value); // ← this must show when you type
         setForm((prev) => ({ ...prev, [field]: value }));
     }
 
-    const fmt = (d) =>
-        d ? `${d.getFullYear()}-${`${d.getMonth() + 1}`.padStart(2, "0")}-${`${d.getDate()}`.padStart(2, "0")}` : null;
-
-    //   const handleSubmit = async () => {
-    //     const pl = {
-    //       milestone_ref_id: milestoneRefId,
-    //       name: form.name.trim(),
-    //       startdate: fmt(form.startDate),
-    //       enddate: fmt(form.endDate),
-    //       actual_date: fmt(form.actualDate),
-    //       remarks: form.remarks.trim(),
-    //       // 🔁 Use milestoneData.status instead of form.project_status
-    //       bottleneck_issue: milestoneData.status === "Overdue" ? form.bottleneck_issue : "",
-    //       current_outlook_date:
-    //         milestoneData.status === "Overdue" ? fmt(form.current_outlook_date) : null,
-    //       accountable_function:
-    //         milestoneData.status === "Overdue" ? form.accountable_function : "",
-    //     };
-
-    //     try {
-    //       await dispatch(updateMilestonesByProjectForUserApi(milestoneRefId, pl));
-    //       // optionally check result?.status === 'success'
-    //       dispatch(getMilestonesByProjectForUserApi(projectRefId));
-    //       dispatch(MilestonesChartByProjectForUserApi(projectRefId));
-
-    //       // Clear form
-    //       setForm([{ bottleneck_issue: "", current_outlook_date: null, accountable_function: null }]);
-    //       setOpenModal(false);
-    //     } catch (error) {
-    //       console.error("Error saving milestone:", error);
-    //       alert("Failed to save milestone. Please try again.");
-    //     }
-    //   };
-
+ 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Modal open={openModal} onClose={() => setOpenModal(false)}>
@@ -192,7 +157,6 @@ const ManagerViewMilestoneModal = ({
                             {/* extra fields when not completed */}
                             {milestoneData?.status === "Overdue" && (
                                 <>
-                                    {console.log("Overdue block rendered")}
                                     <Typography sx={{ fontSize: "14px" }}>
                                         <span style={{ color: "red" }}> Milestone Overdue</span> — reason and new completion date below.
                                     </Typography>

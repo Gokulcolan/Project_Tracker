@@ -9,13 +9,17 @@ import EmojiObjectsOutlinedIcon from '@mui/icons-material/EmojiObjectsOutlined';
 import { handleSesssionStorage } from '../../../utils/helperFunction'
 import { getAllProjectListApi } from '../../../redux/action/managerAction'
 import { managerSelector } from '../../../redux/slice/managerSlice'
+import { UserProjectStatsApi } from '../../../redux/action/userAction'
+import { userSelector } from '../../../redux/slice/userSlice'
 
 const ManagerHome = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { managerProjectListDetail } = useSelector(managerSelector)
+  const {  overallProjectStatDetail } = useSelector(userSelector)
 
 
+  const stats = overallProjectStatDetail?.data;
   const Username = handleSesssionStorage("get", "name")
 
   const handleAddNewProject = () => {
@@ -24,6 +28,7 @@ const ManagerHome = () => {
 
   useEffect(() => {
     dispatch(getAllProjectListApi())
+    dispatch(UserProjectStatsApi())
   }, [])
 
   const handleActionClick = (action, row) => {
@@ -98,7 +103,7 @@ const ManagerHome = () => {
         </Box>
       </Box>
 
-      <div className="card-container">
+      {/* <div className="card-container">
         <StatCards
           title="Total No of Projects"
           details={{
@@ -117,7 +122,13 @@ const ManagerHome = () => {
             count: 2,
           }}
         />
-      </div>
+      </div> */}
+
+      <Box className="card-container">
+        <StatCards title="Total No of Projects" details={{ count: stats?.total_projects }} />
+        <StatCards title="Completed Projects" details={{ count: stats?.completed_projects }} />
+        <StatCards title="Pending Projects" details={{ count: stats?.incomplete_projects }} />
+      </Box>
       <br />
 
       {/* <button className="submit-btn" onClick={handleAddNewProject}> + Add New Project</button> */}
@@ -127,7 +138,7 @@ const ManagerHome = () => {
       </Box>
 
       <CommonTable columns={managerProjectListTableHead} data={formattedData} onActionClick={handleActionClick} />
-      
+
     </div>
   )
 }

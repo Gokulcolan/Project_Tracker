@@ -48,7 +48,6 @@ export default function RootLayout() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { notificationDetail } = useSelector(authSelector)
-    console.log(notificationDetail, "notificationDetail")
 
     const handleProfileClick = (event) => {
         setAnchorEl(event.currentTarget);

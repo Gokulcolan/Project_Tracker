@@ -26,17 +26,7 @@ const TeamMemberProjectList = () => {
                     state: { projectRefId: row.project_ref_id },
                 });
                 break;
-            // case "edit":
-            //     navigate(`/userDashboard/editProject/${row.project_ref_id}`);
-            //     break;
-            // case "delete":
-            //     if (window.confirm(`Are you sure you want to delete "${row.project_name}"?`)) {
-            //         console.log("DELETE", row);
-            //         // dispatch(deleteProjectApi(row.id))
-            //     }
-            //     break;
-            // default:
-            //     break;
+      
         }
     };
 

@@ -1,5 +1,5 @@
 import { Apiservice } from "../api/apiService";
-import { loginReducer, notificationReadUnreadReducer, notificationReducer } from "../slice/authSlice";
+import { EditProfileReducer, forgotPassReducer, loginReducer, notificationReadUnreadReducer, notificationReducer } from "../slice/authSlice";
 
 export function apiHelper(apiReducer, method, apiURL, data = "") {
   return async (dispatch) => {
@@ -17,6 +17,14 @@ export function apiHelper(apiReducer, method, apiURL, data = "") {
 
 export function LoginApi(payload) {
   return apiHelper(loginReducer, "POST", "/api/auth/user-login", payload);
+}
+
+export function ForgotPasswordApi(payload) {
+  return apiHelper(forgotPassReducer, "POST", "/api/auth/reset-password", payload);
+}
+
+export function EditProfileApi(payload) {
+  return apiHelper(EditProfileReducer, "PUT", "/api/user/profile", payload);
 }
 
 export function NotificationApi(payload) {

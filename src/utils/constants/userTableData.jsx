@@ -127,7 +127,7 @@ export const managerTaskListTableHead = [
 
 export const managerViewMilestoneProjectTableHead = [
     {
-        label: "Milestone", id: "name"
+        label: "Milestone", id: "milestone_name"
     },
     {
         label: "Start Date", id: "startdate"

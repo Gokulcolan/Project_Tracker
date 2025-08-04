@@ -112,7 +112,6 @@ const UserAddNewTaskModal = ({
             dispatch(getTaskListByProjectForUserApi(projectRefId));
             setOpenModal(false);
         } catch (error) {
-            console.error("Error saving task:", error);
             alert("Failed to save task(s). Please try again.");
         }
     };

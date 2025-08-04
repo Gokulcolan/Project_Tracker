@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import ProjectOverviewCard from "../../common/cards/projectOverviewCard"
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 import CommonTable from "../../common/Table/commonTable";
 import { getMilestoneByProjectForManagerApi, managerViewSingleProjectApi } from '../../../redux/action/managerAction';
 import { MilestonesChartByProjectForUserApi } from '../../../redux/action/userAction';
@@ -82,11 +81,9 @@ export default function ProjectDashboard() {
     const [openUpdate, setOpenUpdate] = useState(false);
     const [value, setValue] = React.useState(0);
 
-
     const [selectedMilestone, setSelectedMilestone] = useState(null);
     const projectRefId = state?.projectRefId;
     const { managerViewSingleProjectDetail, getMilestonesByProjectForManagerDetail } = useSelector(managerSelector);
-    console.log(managerViewSingleProjectDetail, "managerViewSingleProjectDetail")
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -109,15 +106,7 @@ export default function ProjectDashboard() {
     }
 
     const handleActionClick = (action, row) => {
-        console.log(row, "row")
         switch (action) {
-
-            // case "view":
-            //     navigate("/userDashboard/addMilestones", {
-            //         state: { projectRefId: row.project_ref_id },
-            //     });
-            //     break;
-
             case "view":
                 setSelectedMilestone({
                     projectRefId: projectRefId,
@@ -126,13 +115,6 @@ export default function ProjectDashboard() {
                 });
                 setOpenUpdate(true);
                 break;
-
-            // case "delete":
-            //     if (window.confirm(`Are you sure you want to delete "${row.project_name}"?`)) {
-            //         console.log("DELETE", row);
-            //         // dispatch(deleteProjectApi(row.id))
-            //     }
-            //     break;
 
             default:
                 break;
@@ -161,38 +143,27 @@ export default function ProjectDashboard() {
                         </>
                         : ""
                     }
-
-                    <div style={{ padding: "16px 0" }}>
-                        <Box >
-                            <ProjectOverviewCard
-                                project={{
-                                    projectId: managerViewSingleProjectDetail?.data?.project_id,
-                                    // progress: 40, // Calculate if needed
-                                    // customerName: managerViewSingleProjectDetail?.data?.project_sponsor,
-                                    // customerLink: "",
-                                    // Category: managerViewSingleProjectDetail?.data?.category,
-                                    BusinessUnit: managerViewSingleProjectDetail?.data?.business_unit,
-                                    status: managerViewSingleProjectDetail?.data?.status,
-                                    dateCreated: managerViewSingleProjectDetail?.data?.created_at?.split("T")[0],
-                                    startDate: managerViewSingleProjectDetail?.data?.start_date,
-                                    deadline: managerViewSingleProjectDetail?.data?.enddate,
-                                    // estimatedHours: "90:00",
-                                    Plant: managerViewSingleProjectDetail?.data?.plant,
-                                    description: managerViewSingleProjectDetail?.data?.project_description,
-                                    projectManager: managerViewSingleProjectDetail?.data?.project_manager,
-                                    projectName: managerViewSingleProjectDetail?.data?.project_name,
-                                    projectSponsor: managerViewSingleProjectDetail?.data?.project_sponsor,
-                                    teamMember: managerViewSingleProjectDetail?.data?.teammembers
-                                        ?.map((member) => member.name)
-                                        .join(", "),
-                                    product: managerViewSingleProjectDetail?.data?.product,
-                                }}
-                            />
-                        </Box>
-
-                    </div>
-
-
+                    <Box>
+                        <ProjectOverviewCard
+                            project={{
+                                projectId: managerViewSingleProjectDetail?.data?.project_id,
+                                BusinessUnit: managerViewSingleProjectDetail?.data?.business_unit,
+                                status: managerViewSingleProjectDetail?.data?.status,
+                                dateCreated: managerViewSingleProjectDetail?.data?.created_at?.split("T")[0],
+                                startDate: managerViewSingleProjectDetail?.data?.start_date,
+                                deadline: managerViewSingleProjectDetail?.data?.enddate,
+                                Plant: managerViewSingleProjectDetail?.data?.plant,
+                                description: managerViewSingleProjectDetail?.data?.project_description,
+                                projectManager: managerViewSingleProjectDetail?.data?.project_manager,
+                                projectName: managerViewSingleProjectDetail?.data?.project_name,
+                                projectSponsor: managerViewSingleProjectDetail?.data?.project_sponsor,
+                                teamMember: managerViewSingleProjectDetail?.data?.teammembers
+                                    ?.map((member) => member.name)
+                                    .join(", "),
+                                product: managerViewSingleProjectDetail?.data?.product,
+                            }}
+                        />
+                    </Box>
                 </div>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>

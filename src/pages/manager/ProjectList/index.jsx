@@ -2,8 +2,6 @@ import { useNavigate } from 'react-router-dom'
 import CommonTable from '../../../componenets/common/Table/commonTable'
 import { managerProjectListTableHead, userProjectListTableHead } from '../../../utils/constants/userTableData'
 import { useDispatch, useSelector } from 'react-redux'
-import { userSelector } from '../../../redux/slice/userSlice'
-import { userProjectListApi } from '../../../redux/action/userAction'
 import { useEffect } from 'react'
 import { Box, Grid } from '@mui/material'
 import { getAllProjectListApi } from '../../../redux/action/managerAction'
@@ -30,17 +28,6 @@ const ProjectList = () => {
                     state: { projectRefId: row.project_ref_id },
                 });
                 break;
-            // case "edit":
-            //     navigate(`/userDashboard/editProject/${row.project_ref_id}`);
-            //     break;
-            // case "delete":
-            //     if (window.confirm(`Are you sure you want to delete "${row.project_name}"?`)) {
-            //         console.log("DELETE", row);
-            //         // dispatch(deleteProjectApi(row.id))
-            //     }
-            //     break;
-            // default:
-            //     break;
         }
     };
 

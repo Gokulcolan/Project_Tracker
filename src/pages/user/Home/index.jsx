@@ -3,19 +3,18 @@ import StatCards from '../../../componenets/common/cards/statCards'
 import CommonTable from '../../../componenets/common/Table/commonTable'
 import { userProjectListTableHead } from '../../../utils/constants/userTableData'
 import { useNavigate } from 'react-router-dom'
-import { userProjectListApi } from '../../../redux/action/userAction'
+import { userProjectListApi, UserProjectStatsApi } from '../../../redux/action/userAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { userSelector } from '../../../redux/slice/userSlice'
 import { Box, Typography } from '@mui/material'
-import { authSelector } from '../../../redux/slice/authSlice'
 import EmojiObjectsOutlinedIcon from '@mui/icons-material/EmojiObjectsOutlined';
-import dayjs from 'dayjs'; // If not installed, run: npm install dayjs
 import { handleSesssionStorage } from '../../../utils/helperFunction'
 
 const UserHome = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { userProjectListDetail } = useSelector(userSelector)
+    const { userProjectListDetail, overallProjectStatDetail } = useSelector(userSelector)
+    const stats = overallProjectStatDetail?.data;
 
     const Username = handleSesssionStorage("get", "name")
 
@@ -24,6 +23,7 @@ const UserHome = () => {
     // }
     useEffect(() => {
         dispatch(userProjectListApi())
+        dispatch(UserProjectStatsApi())
     }, [])
 
     const handleActionClick = (action, row) => {
@@ -39,7 +39,6 @@ const UserHome = () => {
             case "delete":
                 if (window.confirm(`Are you sure you want to delete "${row.project_name}"?`)) {
                     console.log("DELETE", row);
-                    // dispatch(deleteProjectApi(row.id))
                 }
                 break;
             default:
@@ -98,34 +97,13 @@ const UserHome = () => {
                 </Box>
             </Box>
 
-            <div className="card-container">
-                <StatCards
-                    title="Total No of Projects"
-                    details={{
-                        count: 10,
-                    }}
-                />
-                <StatCards
-                    title="Completed Projects"
-                    details={{
-                        count: 8,
-                    }}
-                />
-                <StatCards
-                    title="Pending Projects"
-                    details={{
-                        count: 2,
-                    }}
-                />
-            </div>
+            <Box className="card-container">
+                <StatCards title="Total No of Projects" details={{ count: stats?.total_projects }} />
+                <StatCards title="Completed Projects" details={{ count: stats?.completed_projects }} />
+                <StatCards title="Pending Projects" details={{ count: stats?.incomplete_projects }} />
+            </Box>
+
             <br />
-
-            {/* <button className="submit-btn" onClick={handleAddNewProject}> + Add New Project</button> */}
-
-            {/* <Box display="flex" justifyContent="flex-end">
-                <button onClick={handleAddNewProject} className="submit-btn">+ Add New Project</button>
-            </Box> */}
-
             <CommonTable columns={userProjectListTableHead} data={formattedData} onActionClick={handleActionClick} />
         </div>
     )

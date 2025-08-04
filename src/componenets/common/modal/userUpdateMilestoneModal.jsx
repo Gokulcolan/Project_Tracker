@@ -20,9 +20,7 @@ const UserUpdateMilestoneModal = ({
   milestoneRefId,
   milestoneData,
 }) => {
-  console.log(milestoneData, "milestoneData")
   const dispatch = useDispatch();
-
   const [form, setForm] = useState({
     name: "",
     startDate: null,
@@ -32,7 +30,6 @@ const UserUpdateMilestoneModal = ({
     bottleneck_issue: "",
     current_outlook_date: null,
     accountable_function: "",
-    // project_status: "Completed",
   });
 
   /* ---------- populate form from prop ---------- */
@@ -54,7 +51,6 @@ const UserUpdateMilestoneModal = ({
   }, [milestoneData]);
 
   const handleChange = (field, value) => {
-    console.log(`Updating ${field} to`, value); // ← this must show when you type
     setForm((prev) => ({ ...prev, [field]: value }));
   }
 
@@ -69,7 +65,6 @@ const UserUpdateMilestoneModal = ({
       enddate: fmt(form.endDate),
       actual_date: fmt(form.actualDate),
       remarks: form.remarks.trim(),
-      // 🔁 Use milestoneData.status instead of form.project_status
       bottleneck_issue: milestoneData.status === "Overdue" ? form.bottleneck_issue : "",
       current_outlook_date:
         milestoneData.status === "Overdue" ? fmt(form.current_outlook_date) : null,
@@ -87,7 +82,6 @@ const UserUpdateMilestoneModal = ({
       setForm([{ bottleneck_issue: "", current_outlook_date: null, accountable_function: null }]);
       setOpenModal(false);
     } catch (error) {
-      console.error("Error saving milestone:", error);
       alert("Failed to save milestone. Please try again.");
     }
   };
@@ -199,7 +193,6 @@ const UserUpdateMilestoneModal = ({
             {/* extra fields when not completed */}
             {milestoneData?.status === "Overdue" && (
               <>
-                {console.log("Overdue block rendered")}
                 <Typography>
                   If the project is <strong>Overdue</strong>, please provide the <em>issue details</em> and the <em>current outlook date</em>.
                 </Typography>

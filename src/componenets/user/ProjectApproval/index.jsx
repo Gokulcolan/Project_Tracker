@@ -10,14 +10,12 @@ import { finalProjectCommentsApi } from "../../../redux/action/managerAction";
 import { handleSesssionStorage } from "../../../utils/helperFunction";
 
 const ProjectApproval = ({ project }) => {
-    console.log(project, "asdadada")
     const dispatch = useDispatch()
     const projectRefId = project?.projectRefId
     const [comment, setComment] = useState("");
     const { finalProjectCommentsDetail } = useSelector(managerSelector)
     const userData = handleSesssionStorage("get", "user");
     const parsedUser = JSON.parse(userData);
-    console.log(parsedUser.name, "dev"); // "Bk"
 
 
     const today = new Date();

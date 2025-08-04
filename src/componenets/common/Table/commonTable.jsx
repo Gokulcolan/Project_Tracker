@@ -116,15 +116,15 @@ const CommonTable = ({
                             fontSize: "0.75rem",
                             textTransform: "capitalize",
                             backgroundColor:
-                              row[column.id] === "Waiting for Manager Approval"
+                              row[column.id] === "Waiting for Manager Approval" || row[column.id] === "Ask for Manager Approval"
                                 ? "#000000ff" :
-                                row[column.id] === "Completed"
+                                row[column.id] === "Completed" || row[column.id] === "Approved"
                                   ? "#4caf50"
-                                  : row[column.id] === "Yet to Start" || row[column.id] === "Not Started"
+                                  : row[column.id] === "Yet to Start" || row[column.id] === "Not Started" || row[column.id] === "On Hold"
                                     ? "#ff9800"
-                                    : row[column.id] === "In Progress"
+                                    : row[column.id] === "In Progress" || row[column.id] === "In Review"
                                       ? "#2196f3"
-                                      : row[column.id] === "Overdue" || row[column.id] === "Incomplete" || row[column.id] === "Exceeded Outlook" ? "red" : "#9e9e9e", // default gray
+                                      : row[column.id] === "Overdue" || row[column.id] === "Incomplete" || row[column.id] === "Needs Changes" ? "red" : "#9e9e9e", // default gray
                           }}
                         >
                           <Box>{row[column.id] ?? "-"}</Box>

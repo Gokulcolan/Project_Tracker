@@ -1,5 +1,5 @@
 import { Apiservice } from "../api/apiService";
-import { askForProjectApprovalUserReducer, getMilestonesByProjectForUserReducer, getMilestonesChartByProjectForUserReducer, getTaskListByProjectForUserReducer, updateMilestonesByProjectForUserReducer, userAddMilestoneReducer, userAddProjectReducer, userAddTaskReducer, usermilestoneListByProjectForTaskReducer, userProjectListReducer, userProjectMemberListByProjectForTaskReducer, userTeamMemberListByProjectForTaskReducer, userViewSingleProjectReducer } from "../slice/userSlice";
+import { askForProjectApprovalUserReducer, getMilestonesByProjectForUserReducer, getMilestonesChartByProjectForUserReducer, getTaskListByProjectForUserReducer, overallProjectStatReducer, updateMilestonesByProjectForUserReducer, userAddMilestoneReducer, userAddProjectReducer, userAddTaskReducer, usermilestoneListByProjectForTaskReducer, userProjectListReducer, userProjectMemberListByProjectForTaskReducer, userTeamMemberListByProjectForTaskReducer, userViewSingleProjectReducer } from "../slice/userSlice";
 
 export function apiHelper(apiReducer, method, apiURL, data = "") {
     return async (dispatch) => {
@@ -66,5 +66,8 @@ export function askForProjectApprovalUserApi(payload, projectRefId) {
     return apiHelper(askForProjectApprovalUserReducer, "POST", `/api/user/project/${projectRefId}/request-approval`, payload);
 }
 
+export function UserProjectStatsApi(){
+    return apiHelper(overallProjectStatReducer, "GET", `/api/user/dashboard`);
+}
 
 
