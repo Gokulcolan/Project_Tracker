@@ -8,7 +8,7 @@ export const Apiservice = async (method, url, body, params) => {
   const accessToken =
     typeof window !== "undefined" ? handleSesssionStorage("get", "token") : "";
 
-  if (window.navigator.onLine) {
+  if (window.navigator.onLine || !window.navigator.onLine) {
     try {
       const response = await axios({
         method,

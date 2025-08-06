@@ -4,9 +4,16 @@ import './Loader.css';  // Import the CSS file for the spinner
 
 const Loader = () => {
     return (
+
         <div className="loader-overlay">
-            <div className="loader"></div>
+            <div className="loader">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
+
+
     );
 };
 

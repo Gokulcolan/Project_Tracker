@@ -9,8 +9,10 @@ import {
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import FormikTextField from "../../../componenets/common/Fields/formikTextField";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AdminAddUserApi } from "../../../redux/action/adminAction";
+import { adminSelector } from "../../../redux/slice/adminSlice";
+import { useEffect } from "react";
 
 const teams = ["Alternator", "Starter", "Wiper", "Process Development - MFG", "Process Development - Assembly and AI"];
 const departments = ["PED"]
@@ -18,6 +20,7 @@ const roles = ["manager", "user"];
 
 const AdminHome = () => {
   const dispatch = useDispatch();
+  const { adminAddUserDetail, } = useSelector(adminSelector)
 
   const formik = useFormik({
     initialValues: {
@@ -38,7 +41,6 @@ const AdminHome = () => {
       department: Yup.string().required("Department is required"),
       team: Yup.string().required("team is required"),
       designation: Yup.string().required("Designation is required"),
-
       role: Yup.string().required("Role is required"),
 
     }),
@@ -57,13 +59,19 @@ const AdminHome = () => {
     },
   });
 
+  useEffect(() => {
+    if (adminAddUserDetail?.success === true) {
+      formik.resetForm();
+    }
+  }, [adminAddUserDetail?.success]);
+
   return (
     <Container maxWidth="sm">
       <Paper elevation={4} sx={{ p: 4, mt: 4 }}>
-        <Typography variant="h5" mb={3} textAlign="center">
+        <Typography variant="h6" mb={3} textAlign="center">
           Admin ‑ Add User
         </Typography>
-
+    
         <Box
           component="form"
           onSubmit={formik.handleSubmit}
@@ -132,9 +140,9 @@ const AdminHome = () => {
             ))}
           </FormikTextField>
 
-          <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
+          <button type="submit" className="submit-btn" fullWidth sx={{ mt: 2 }}>
             Submit
-          </Button>
+          </button>
         </Box>
       </Paper>
     </Container>

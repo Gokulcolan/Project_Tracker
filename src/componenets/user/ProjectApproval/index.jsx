@@ -95,12 +95,16 @@ const ProjectApproval = ({ project }) => {
                         gap: 2,
                         justifyContent: "space-between",
                         backgroundColor: "#f5f5f5",
-                        opacity: parsedUser?.name !== project?.projectLead ? 0.6 : 1, // Slightly faded if disabled
-                        pointerEvents: parsedUser?.name !== project?.projectLead ? "none" : "auto" // Prevent interaction
+                        opacity: parsedUser?.ref_id !== project?.projectLead ? 0.6 : 1, // Slightly faded if disabled
+                        pointerEvents: parsedUser?.ref_id !== project?.projectLead ? "none" : "auto" // Prevent interaction
                     }}
                 >
+                   
                     <Typography variant="subtitle1" fontWeight={600}>
-                        Project Comments
+                        Project Comments{" "}
+                        <Typography component="span" variant="body2" color="text.secondary">
+                            (Only the Team Leader can do this)
+                        </Typography>
                     </Typography>
 
                     <TextField
@@ -111,7 +115,7 @@ const ProjectApproval = ({ project }) => {
                         size="small"
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
-                        disabled={parsedUser?.name !== project?.projectLead}
+                        disabled={parsedUser?.ref_id !== project?.projectLead}
                     />
 
                     <Button
@@ -119,7 +123,7 @@ const ProjectApproval = ({ project }) => {
                         color="success"
                         onClick={handleApproval}
                         sx={{ alignSelf: "flex-end", mt: 2 }}
-                        disabled={parsedUser?.name !== project?.projectLead}
+                        disabled={parsedUser?.ref_id !== project?.projectLead}
                     >
                         Ask For Manager Approval
                     </Button>

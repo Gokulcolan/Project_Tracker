@@ -16,8 +16,6 @@ import { authSelector, logout } from "../../../redux/slice/authSlice";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import NotificationCard from "../../../componenets/common/cards/notificationCard";
 import socket from "../../../socket";
-import axios from "axios";
-import { ADMIN_BASE_URL } from "../../../redux/api/configURL";
 import { NotificationApi, NotificationReadUnreadApi } from "../../../redux/action/authAction";
 
 const drawerWidth = 280;
@@ -48,6 +46,7 @@ export default function RootLayout() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { notificationDetail } = useSelector(authSelector)
+    console.log(notificationDetail,":notificationDetail")
 
     const handleProfileClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -127,7 +126,8 @@ export default function RootLayout() {
             setNotifications(prev =>
                 prev.map(n => n.id === notifId ? { ...n, is_read: true } : n)
             );
-        } catch (err) {
+        } 
+        catch (err) {
             console.error("Failed to mark notification as read:", err);
         }
     };

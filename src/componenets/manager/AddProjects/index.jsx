@@ -43,7 +43,9 @@ const categories = [
     { value: "Investment reduction - Profitability ", label: "Investment reduction - Profitability " },
     { value: "Manpower reduction - Profitability ", label: "Manpower reduction - Profitability " },
     { value: "New products Introduction - Customer Satisfaction", label: "New products Introduction - Customer Satisfaction" },
-    { value: "Process Technology (Q Impr.) - Customer Satisfactio", label: "Process Technology (Q Impr.) - Customer Satisfactio" },
+    { value: "Process Technology (Q Impr.) - Customer Satisfaction", label: "Process Technology (Q Impr.) - Customer Satisfaction" },
+    { value: "AI Project", label: "AI Project" },
+
 ];
 
 

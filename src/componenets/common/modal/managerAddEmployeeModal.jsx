@@ -14,14 +14,18 @@ import FormikTextField from "../Fields/formikTextField";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { getManagerTeamMemberListApi, managerAddUserApi } from "../../../redux/action/managerAction";
+import { adminSelector } from "../../../redux/slice/adminSlice";
+import { useEffect } from "react";
 
 
 const ManagerAddNewEmployeeModal = ({ openModal, setOpenModal }) => {
 
     const dispatch = useDispatch();
 
+    const { managerAddUserDetail, } = useSelector(adminSelector)
+
     const teams = ["Alternator", "Starter", "Wiper", "Process Development - MFG", "Process Development - Assembly and AI"];
-    
+
     const departments = ["PED"]
 
     const formik = useFormik({
@@ -58,12 +62,15 @@ const ManagerAddNewEmployeeModal = ({ openModal, setOpenModal }) => {
             try {
                 await dispatch(managerAddUserApi(payload));
                 dispatch(getManagerTeamMemberListApi());
+                formik.resetForm();
                 setOpenModal(false);
             } catch (error) {
                 alert("Failed to Add New User. Please try again.");
             }
         },
     });
+
+
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Modal open={openModal} onClose={() => setOpenModal(false)}>
