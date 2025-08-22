@@ -111,10 +111,11 @@ const Login = () => {
                         >
                             <h2
                                 style={{
-                                    fontSize: "48px",
-                                    color: "#FFFFFF",
+                                    fontSize: "44px",
+                                    color: "#ffffffff",
                                     textShadow: "2px 2px 6px rgba(0, 0, 0, 0.7)",
                                     fontWeight: "bold",
+                                    textTransform:"uppercase"
                                 }}
                             >
                                 PED - Project Tracker

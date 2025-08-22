@@ -134,7 +134,7 @@ export default function ProjectDashboard() {
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                <div style={{ padding: "16px 0" }}>
+                <div >
                     {managerViewSingleProjectDetail?.data?.category === "Others" ?
                         <>
                             <Box display="flex" justifyContent="flex-end" >
@@ -160,7 +160,9 @@ export default function ProjectDashboard() {
                                 teamMember: managerViewSingleProjectDetail?.data?.teammembers
                                     ?.map((member) => member.name)
                                     .join(", "),
+                                projectLead: managerViewSingleProjectDetail?.data?.project_leader.name,
                                 product: managerViewSingleProjectDetail?.data?.product,
+                                Category: managerViewSingleProjectDetail?.data?.category,
                             }}
                         />
                     </Box>
@@ -206,9 +208,9 @@ export default function ProjectDashboard() {
                         teamMember: managerViewSingleProjectDetail?.data?.teammembers
                             ?.map((member) => member.name)
                             .join(", "),
+                        projectLead: managerViewSingleProjectDetail?.data?.project_leader?.name,
                         projectRefId: managerViewSingleProjectDetail?.data?.project_ref_id
                     }}
-
                 />
             </CustomTabPanel>
 

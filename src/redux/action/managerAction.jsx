@@ -1,5 +1,5 @@
 import { Apiservice } from "../api/apiService";
-import { finalProjectCommentsReducer, getManagerTeamMemberListReducer, getManagerTeamMemberProjectListReducer, getManagerTeamMemberReducer, getMilestonesByProjectForManagerReducer, getMilestonesChartByProjectForManagerReducer, getTaskListByProjectForManagerReducer, managerAddMilestoneReducer, managerAddProjectReducer, managerAddUserReducer, managerProjectListReducer, managerViewSingleProjectReducer, projectStatusUpdateReducer, updateMilestonesByProjectForManagerReducer } from "../slice/managerSlice";
+import { filterCategoriesForChartReducer, filterTeamMembersForChartReducer, finalProjectCommentsReducer, getManagerTeamMemberListReducer, getManagerTeamMemberProjectListReducer, getManagerTeamMemberReducer, getMilestonesByProjectForManagerReducer, getMilestonesChartByProjectForManagerReducer, getTaskListByProjectForManagerReducer, managerAddMilestoneReducer, managerAddProjectReducer, managerAddUserReducer, managerProjectListReducer, managerViewSingleProjectReducer, projectStatusUpdateReducer, updateMilestonesByProjectForManagerReducer } from "../slice/managerSlice";
 
 export function apiHelper(apiReducer, method, apiURL, data = "") {
     return async (dispatch) => {
@@ -67,4 +67,21 @@ export function projectStatusUpdateManagerApi(payload, projectRefId) {
 
 export function finalProjectCommentsApi(projectRefId) {
     return apiHelper(finalProjectCommentsReducer, "GET", `/api/project/${projectRefId}/status-history`);
+}
+
+export function filterCategoriesForChartApi(category) {
+    return apiHelper(
+        filterCategoriesForChartReducer,
+        "GET",
+        `/api/user/dashboard/category-summary?category=${encodeURIComponent(category?.category)}`
+    );
+}
+
+export function filterMemberChartApi(member) {
+   
+    return apiHelper(
+        filterTeamMembersForChartReducer,
+        "GET",
+        `/api/user/dashboard/user-summary?ref_id=${member?.member}`
+    );
 }

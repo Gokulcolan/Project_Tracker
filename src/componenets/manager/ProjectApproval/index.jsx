@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, CardHeader, Chip, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
+import { Box, Button, Card, CardContent, CardHeader, Chip, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
 import EventIcon from '@mui/icons-material/Event';
 import PeopleIcon from '@mui/icons-material/People';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
@@ -12,15 +12,19 @@ const ProjectApproval = ({ project }) => {
     const dispatch = useDispatch()
     const [status, setStatus] = useState("");
     const [comment, setComment] = useState("");
+    const [approval_categories, setApproval_categories] = useState("")
+    const [approve_value, setApprove_value] = useState("")
     const projectRefId = project.projectRefId
     const { finalProjectCommentsDetail } = useSelector(managerSelector)
 
     const handleApproval = () => {
-        const payload = { projectId: projectRefId, comment, status };
+        const payload = { projectId: projectRefId, comment, status, approval_categories, approve_value };
         dispatch(projectStatusUpdateManagerApi(payload, projectRefId))
             .then(() => {
                 setComment(""); // clear comment
                 setStatus(""); // reset status if needed
+                setApproval_categories("");
+                setApprove_value("");
                 refreshComments(); // fetch updated comments
             });
     };
@@ -62,6 +66,7 @@ const ProjectApproval = ({ project }) => {
                         <InfoRow icon={<PeopleIcon color="secondary" />} label="Team Members" value={project?.teamMember} />
                         <InfoRow icon={<EventIcon color="primary" />} label="Start Date" value={project?.startDate} />
                         <InfoRow icon={<EventIcon color="error" />} label="Deadline" value={project?.deadline} />
+                        <InfoRow icon={<PeopleIcon color="primary" />} label="Project Lead" value={project.projectLead} />
                         <InfoRow icon={<PeopleIcon color="primary" />} label="Project Manager" value={project.projectManager} />
                         <InfoRow icon={<PeopleIcon color="primary" />} label="Project Sponsor" value={project.projectSponsor} />
                     </CardContent>
@@ -83,12 +88,13 @@ const ProjectApproval = ({ project }) => {
                         backgroundColor: "#f5f5f5",
                     }}
                 >
-                    <FormControl fullWidth size="small">
+                    <FormControl fullWidth size="small" variant="outlined">
                         <InputLabel id="status-label">Project Status</InputLabel>
                         <Select
                             labelId="status-label"
                             value={status}
                             onChange={(e) => setStatus(e.target.value)}
+                            label="Project Status"
                         >
                             <MenuItem disabled>🟢 Positive</MenuItem>
                             <MenuItem value="Approved">Approved</MenuItem>
@@ -100,10 +106,43 @@ const ProjectApproval = ({ project }) => {
                             <MenuItem disabled>🔴 Negative</MenuItem>
                             <MenuItem value="Needs Changes">Needs Changes</MenuItem>
                             <MenuItem value="Dropped">Dropped</MenuItem>
-                            {/* <MenuItem value="Rejected">Rejected</MenuItem> */}
                         </Select>
                     </FormControl>
 
+                    <Grid container spacing={2}>
+                        {/* Dropdown */}
+                        <Grid item xs={6} sx={{ width: "300px" }}>
+                            <FormControl fullWidth size="small">
+                                <InputLabel id="improvement-label">Improvement Type</InputLabel>
+                                <Select
+                                    labelId="improvement-label"
+                                    label="Improvement Type"
+                                    value={approval_categories}
+                                    onChange={(e) => setApproval_categories(e.target.value)}
+                                >
+                                    <MenuItem value="investment_saving">Investment Saving</MenuItem>
+                                    <MenuItem value="man_power_reduction">Man Power Reduction</MenuItem>
+                                    <MenuItem value="cost_reduction">Cost Reduction</MenuItem>
+                                    <MenuItem value="productivity_improvement">Productivity Improvement</MenuItem>
+                                    <MenuItem value="quality_improvement">Quality Improvement</MenuItem>
+                                    <MenuItem value="npi">NPI</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+
+                        {/* Percentage Input */}
+                        <Grid item xs={6}>
+                            <TextField
+                                fullWidth
+                                size="small"
+                                label="Value"
+                                type="number"
+                                value={approve_value}
+                                onChange={(e) => setApprove_value(e.target.value)}
+
+                            />
+                        </Grid>
+                    </Grid>
                     <TextField
                         placeholder="Enter your comments here..."
                         multiline

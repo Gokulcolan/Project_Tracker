@@ -105,7 +105,7 @@ export default function ProjectDashboard() {
                     milestoneData: row,
                 });
                 setOpen(true);
-              
+
                 break;
             case "edit":
                 setSelectedMilestone({
@@ -115,7 +115,7 @@ export default function ProjectDashboard() {
                 });
                 setOpenUpdate(true);
                 break;
-        
+
             default:
                 break;
         }
@@ -149,6 +149,8 @@ export default function ProjectDashboard() {
                         teamMember: userViewSingleProjectDetail?.data?.teammembers
                             ?.map((member) => member.name)
                             .join(", "),
+                        projectLead: userViewSingleProjectDetail?.data?.project_leader?.name,
+                        
 
                         product: userViewSingleProjectDetail?.data?.product,
                     }}
@@ -197,7 +199,9 @@ export default function ProjectDashboard() {
                             ?.map((member) => member.name)
                             .join(", "),
                         projectRefId: userViewSingleProjectDetail?.data?.project_ref_id,
-                        projectLead: userViewSingleProjectDetail?.data?.project_leader?.ref_id
+                        projectLead: userViewSingleProjectDetail?.data?.project_leader?.ref_id,
+                        projectLeadName: userViewSingleProjectDetail?.data?.project_leader?.name
+
                     }}
                 />
             </CustomTabPanel>

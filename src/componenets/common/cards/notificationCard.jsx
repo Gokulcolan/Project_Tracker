@@ -5,6 +5,7 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
 const NotificationCard = ({ title, message, timestamp, isRead, onClick }) => {
   return (
+    
     <Card
       onClick={onClick}
       variant="outlined"
@@ -28,7 +29,6 @@ const NotificationCard = ({ title, message, timestamp, isRead, onClick }) => {
             : "linear-gradient(135deg, #a5d6a7, #81c784)"
         }
       }}
-
 
     >
       <CardContent sx={{ p: 1, "&:last-child": { pb: 1 } }}>

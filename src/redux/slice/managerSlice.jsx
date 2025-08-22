@@ -30,7 +30,11 @@ const managerSlice = createSlice({
         projectStatusUpdateDetail: [],
         projectStatusUpdateIsLoading: false,
         finalProjectCommentsDetail: [],
-        finalProjectCommentsIsLoading: false
+        finalProjectCommentsIsLoading: false,
+        filterCategoriesForChartDetail: [],
+        filterCategoriesForChartIsLoading: false,
+        filterTeamMembersForChartDetail: [],
+        filterTeamMembersForChartIsLoading: false
     },
     reducers: {
         managerAddProjectReducer: (state, { payload }) => {
@@ -111,6 +115,16 @@ const managerSlice = createSlice({
             state.finalProjectCommentsDetail = apiData;
             state.finalProjectCommentsIsLoading = isLoading;
         },
+        filterCategoriesForChartReducer: (state, { payload }) => {
+            const { apiData, isLoading } = payload;
+            state.filterCategoriesForChartDetail = apiData;
+            state.filterCategoriesForChartIsLoading = isLoading;
+        },
+        filterTeamMembersForChartReducer: (state, { payload }) => {
+            const { apiData, isLoading } = payload;
+            state.filterTeamMembersForChartDetail = apiData;
+            state.filterTeamMembersForChartIsLoading = isLoading;
+        },
     },
 })
 
@@ -129,7 +143,9 @@ export const {
     managerAddUserReducer,
     getManagerTeamMemberProjectListReducer,
     projectStatusUpdateReducer,
-    finalProjectCommentsReducer
+    finalProjectCommentsReducer,
+    filterCategoriesForChartReducer,
+    filterTeamMembersForChartReducer
 
 } = managerSlice.actions;
 

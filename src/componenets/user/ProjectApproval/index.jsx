@@ -68,6 +68,8 @@ const ProjectApproval = ({ project }) => {
                         <InfoRow icon={<EventIcon color="error" />} label="Deadline" value={project?.deadline} />
                         <InfoRow icon={<PeopleIcon color="primary" />} label="Project Manager" value={project.projectManager} />
                         <InfoRow icon={<PeopleIcon color="primary" />} label="Project Sponsor" value={project.projectSponsor} />
+                        <InfoRow icon={<PeopleIcon color="secondary" />} label="Project Lead" value={project.projectLeadName} />
+
                         {/* <InfoRow icon={<PeopleIcon color="primary" />} label="Status" value={project.status} /> */}
                     </CardContent>
                     <Box sx={{ mb: 2 }}>
@@ -99,7 +101,7 @@ const ProjectApproval = ({ project }) => {
                         pointerEvents: parsedUser?.ref_id !== project?.projectLead ? "none" : "auto" // Prevent interaction
                     }}
                 >
-                   
+
                     <Typography variant="subtitle1" fontWeight={600}>
                         Project Comments{" "}
                         <Typography component="span" variant="body2" color="text.secondary">

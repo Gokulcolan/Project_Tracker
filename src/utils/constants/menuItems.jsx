@@ -1,4 +1,7 @@
 import ContactPageIcon from "@mui/icons-material/ContactPage";
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import Diversity3Icon from '@mui/icons-material/Diversity3';
 
 export const AdminmenuItems = [
     {
@@ -6,7 +9,7 @@ export const AdminmenuItems = [
             {
                 path: "/adminDashboard/home",
                 name: "Admin Home",
-                icon: <ContactPageIcon />,
+                icon: <Diversity3Icon />,
             },
 
         ],
@@ -19,18 +22,18 @@ export const ManagermenuItems = [
             {
                 path: "/managerDashboard/home",
                 name: "Manager Home",
-                icon: <ContactPageIcon />,
+                icon: <DashboardIcon />,
             },
             {
                 path: "/managerDashboard/projects",
                 name: "Project List",
-                icon: <ContactPageIcon />,
+                icon: <AccountTreeIcon />,
             },
 
             {
                 path: "/managerDashboard/teamMembers",
                 name: "Team Members",
-                icon: <ContactPageIcon />,
+                icon: <Diversity3Icon />,
             },
 
         ],
@@ -43,18 +46,14 @@ export const UsermenuItems = [
             {
                 path: "/userDashboard/home",
                 name: "User Dashboard",
-                icon: <ContactPageIcon />,
+                icon: <DashboardIcon />,
             },
             {
                 path: "/userDashboard/projects",
                 name: "Project List",
-                icon: <ContactPageIcon />,
+                icon: <AccountTreeIcon />,
             },
-            // {
-            //     path: "/userDashboard/mileStones",
-            //     name: "Milestones",
-            //     icon: <ContactPageIcon />,
-            // },
+        
         ],
     },
 ];

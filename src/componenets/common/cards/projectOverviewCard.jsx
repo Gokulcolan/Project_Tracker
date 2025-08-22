@@ -50,6 +50,7 @@ const ProjectOverviewCard = ({ project }) => {
             <InfoRow icon={<PeopleIcon color="primary" />} label="Project Manager" value={project.projectManager} />
             <InfoRow icon={<PeopleIcon color="primary" />} label="Project Sponsor" value={project.projectSponsor} />
             <InfoRow icon={<PeopleIcon color="secondary" />} label="Team Members" value={project.teamMember} />
+            <InfoRow icon={<PeopleIcon color="secondary" />} label="Project Lead" value={project.projectLead} />
             <InfoRow icon={<BusinessIcon color="success" />} label="Business Unit" value={project.BusinessUnit} />
             <InfoRow icon={<InventoryIcon color="warning" />} label="Product" value={project.product} />
             <InfoRow icon={<InventoryIcon color="warning" />} label="projectId" value={project.projectId} />

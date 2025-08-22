@@ -31,12 +31,13 @@ const UserUpdateMilestoneModal = ({
     current_outlook_date: null,
     accountable_function: "",
   });
+  console.log(milestoneData,"milestoneData")
 
   /* ---------- populate form from prop ---------- */
   useEffect(() => {
     if (!milestoneData) return;
     setForm({
-      name: milestoneData.name || "",
+      name: milestoneData.milestone_name || "",
       startDate: milestoneData.startdate ? new Date(milestoneData.startdate) : null,
       endDate: milestoneData.enddate ? new Date(milestoneData.enddate) : null,
       actualDate: milestoneData.actual_date ? new Date(milestoneData.actual_date) : null,
@@ -187,6 +188,8 @@ const UserUpdateMilestoneModal = ({
                   value={form.actualDate}
                   onChange={(d) => handleChange("actualDate", d)}
                   slotProps={{ textField: { size: "small", fullWidth: true } }}
+                  minDate={form.startDate}
+                // maxDate={form.endDate}
                 />
               </>
             )}
@@ -211,6 +214,8 @@ const UserUpdateMilestoneModal = ({
                   onChange={(d) => handleChange("current_outlook_date", d)}
                   slotProps={{ textField: { size: "small", fullWidth: true } }}
                   disabled={!!milestoneData.current_outlook_date}
+                  minDate={form.startDate}
+                // maxDate={form.endDate}
                 />
 
                 <TextField
@@ -237,11 +242,12 @@ const UserUpdateMilestoneModal = ({
                   value={form.actualDate}
                   onChange={(d) => handleChange("actualDate", d)}
                   slotProps={{ textField: { size: "small", fullWidth: true } }}
+                  minDate={form.current_outlook_date}
+                  // maxDate={form.endDate}
                 />
               </>
             )}
           </Stack>
-
           <Button
             variant="contained"
             color="success"

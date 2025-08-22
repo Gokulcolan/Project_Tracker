@@ -11,12 +11,13 @@ import { getAllProjectListApi } from '../../../redux/action/managerAction'
 import { managerSelector } from '../../../redux/slice/managerSlice'
 import { UserProjectStatsApi } from '../../../redux/action/userAction'
 import { userSelector } from '../../../redux/slice/userSlice'
+import ChartWithFilter from '../../../componenets/manager/FilterCategories/ChartWithFilter'
 
 const ManagerHome = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { managerProjectListDetail } = useSelector(managerSelector)
-  const {  overallProjectStatDetail } = useSelector(userSelector)
+  const { overallProjectStatDetail } = useSelector(userSelector)
 
 
   const stats = overallProjectStatDetail?.data;
@@ -133,11 +134,12 @@ const ManagerHome = () => {
 
       {/* <button className="submit-btn" onClick={handleAddNewProject}> + Add New Project</button> */}
 
-      <Box display="flex" justifyContent="flex-end">
+      {/* <Box display="flex" justifyContent="flex-end">
         <button onClick={handleAddNewProject} className="submit-btn">+ Add New Project</button>
       </Box>
 
-      <CommonTable columns={managerProjectListTableHead} data={formattedData} onActionClick={handleActionClick} />
+      <CommonTable columns={managerProjectListTableHead} data={formattedData} onActionClick={handleActionClick} /> */}
+      <ChartWithFilter />
 
     </div>
   )
