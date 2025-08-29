@@ -31,6 +31,7 @@ const priorities = [
     { value: "Special Motors ", label: "Special Motors " },
     { value: "SMCG", label: "SMCG" },
     { value: "SBD", label: "SBD" },
+    { value: "Others", label: "Others" },
 ];
 
 const categories = [
@@ -45,7 +46,7 @@ const categories = [
     { value: "New products Introduction - Customer Satisfaction", label: "New products Introduction - Customer Satisfaction" },
     { value: "Process Technology (Q Impr.) - Customer Satisfaction", label: "Process Technology (Q Impr.) - Customer Satisfaction" },
     { value: "AI Project", label: "AI Project" },
-
+    { value: "Quality Improvements", label: "Quality Improvements" },
 ];
 
 

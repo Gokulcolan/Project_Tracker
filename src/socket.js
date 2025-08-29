@@ -5,18 +5,21 @@ import { ADMIN_BASE_URL } from "./redux/api/configURL";
 
 const SERVER_URL = ADMIN_BASE_URL 
 
-
 // Get JWT token from sessionStorage or localStorage
 const token = handleSesssionStorage("get", "token")// or localStorage.getItem("access_token")
 
 // Initialize Socket.IO connection
 const socket = io(SERVER_URL, {
+    
     transports: ["websocket"],
+
     auth: {
         token: `Bearer ${token}`, // pass token as Bearer
     },
+
     reconnectionAttempts: 5, // retry if connection drops
     autoConnect: true,
+
 });
 
 // Logging connection status

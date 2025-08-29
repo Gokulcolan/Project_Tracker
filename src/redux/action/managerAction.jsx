@@ -78,7 +78,6 @@ export function filterCategoriesForChartApi(category) {
 }
 
 export function filterMemberChartApi(member) {
-   
     return apiHelper(
         filterTeamMembersForChartReducer,
         "GET",

@@ -21,9 +21,13 @@ const UserHome = () => {
     // const handleAddNewProject = () => {
     //     navigate("/userDashboard/addNewProject")
     // }
+
     useEffect(() => {
+
         dispatch(userProjectListApi())
+
         dispatch(UserProjectStatsApi())
+
     }, [])
 
     const handleActionClick = (action, row) => {
@@ -76,9 +80,7 @@ const UserHome = () => {
                     <Typography variant="body1" mt={1}>
                         Track your project progress, manage milestones, and stay updated — all in one place.
                     </Typography>
-                    {/* <Typography variant="caption" mt={1} display="block" sx={{ opacity: 0.9 }}>
-                        {dayjs().format("dddd, MMMM D, YYYY")}
-                    </Typography> */}
+                    
                 </Box>
 
                 {/* Right: Icon */}
